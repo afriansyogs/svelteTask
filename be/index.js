@@ -1,43 +1,24 @@
-const express = require('express');
+const express = require('express')
+const port = 3000
+const { PrismaClient } = require('@prisma/client')
+const prisma = new PrismaClient()
+// const bodyParser = require('body-parser');
+
 const app = express();
-const bodyParser = require('body-parser')
-const port = 3000;
-const db = require('./connection.js');
+app.use(express.json())
 
-app.use(bodyParser.json())
+const authRoutes = require('./routes/auth')
+const userRoutes = require('./routes/user')
+const taskRoutes = require('./routes/task')
 
-app.post('/register', async (req, res) => {
-  try {
-    let {username, email, password} = req.body
-    if(!username || !email || !password) return res.status(400).json({messege: "All fields required"})
-
-      const exitingUser = users.find(user => user.username === username)
-      if(exitingUser) return res.status(409).json({messege: "username sudah digunakan"})
-  } catch (error) {
-    console.log(error)
-    res.status(500).send(error);
-  }
-})
-
-app.get('/', async (req, res) => {
-  try {
-    const query = 'SELECT * FROM users WHERE id='
-    const task = await db.query(query);
-    res.json(task);
-  } catch (error) {
-    res.status(500).send(error);
-  }
+app.use((req, res, next) => {
+  req.prisma = prisma;
+  next();
 });
 
-app.post('/task', async (req, res) => {
-  try {
-    
-  } catch (error) {
-    
-  }
-})
-
-
+app.use('/auth', authRoutes);
+app.use('/profile', userRoutes);
+app.use('/', taskRoutes);
 
 app.listen(port, () => {
   console.log(`listening port ${port}`)
