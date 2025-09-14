@@ -46,3 +46,18 @@ exports.newTask = async (req, res) => {
     res.status(500).json({error: "failed add task", details:error.message})
   }
 }
+
+exports.taskDetail = async (req, res) => {
+  try {
+    const {id} = req.params
+    const task = await prisma.task.findUnique({
+      where: {id}
+    })
+
+    if (!task)return res.status(402).json({error: "task not found"})
+
+    res.status(200).json({message: "success task detail", task})
+  } catch (error) {
+    res.status(500).json({error: "failed get task detail", details: error.message})
+  }
+}

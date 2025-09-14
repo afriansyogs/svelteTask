@@ -3,8 +3,16 @@ const port = 3000
 const { PrismaClient } = require('@prisma/client')
 const prisma = new PrismaClient()
 // const bodyParser = require('body-parser');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
+}));
+
 app.use(express.json())
 
 const authRoutes = require('./routes/auth')
