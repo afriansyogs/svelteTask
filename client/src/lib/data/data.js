@@ -6,7 +6,7 @@ import IconVideo from '@lucide/svelte/icons/video';
 import IconGames from '@lucide/svelte/icons/gamepad';
 import IconSettings from '@lucide/svelte/icons/settings';
 
-export const navbarItems = [
+export const sidebarItems = [
   { name: 'folder', label: 'Browse Files', href: '#/files', icon: IconFolder },
   { name: 'image', label: 'Browse Images', href: '#/images', icon: IconImage },
   { name: 'music', label: 'Browse Music', href: '#/music', icon: IconMusic },

@@ -9,4 +9,3 @@
 	<SideBar />
 	{@render children?.()}
 </div>
-

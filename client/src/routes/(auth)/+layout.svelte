@@ -3,8 +3,6 @@
   const {children} = $props();
 </script>
 
-<div class="">
-  <h1>halo</h1>
-  <SwitchMode />
+<div class="min-h-screen flex items-center justify-center">
   {@render children?.()}
 </div>
