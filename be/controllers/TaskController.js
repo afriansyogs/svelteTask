@@ -1,5 +1,7 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 exports.taskData = async (req, res) => {
   try {

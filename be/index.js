@@ -9,11 +9,12 @@ const app = express();
 
 app.use(cors({
   origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
   credentials: true
 }));
 
 app.use(express.json())
+app.use('/uploads', express.static('uploads'));
 
 const authRoutes = require('./routes/auth')
 const userRoutes = require('./routes/user')
