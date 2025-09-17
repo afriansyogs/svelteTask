@@ -11,22 +11,15 @@ export const taskData = async (token) => {
   })
 }
 
-export const newTask = async (token, {title, description, taskImg, deadline, priority, status }) => {
+export const submitTask = async (token, formData) => {
   return fetch(`${viteUrl}/newTask`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'applicaiton/json',
-      'accept': 'application/json',
+      // 'Content-Type': 'applicaiton/json',
+      // 'accept': 'application/json',
       'Authorization': `Bearer ${token}`
     },
-    body: JSON.stringify({
-      title,
-      description,
-      taskImg,
-      deadline,
-      priority,
-      status
-    })
+    body: formData
   })
 }
 
