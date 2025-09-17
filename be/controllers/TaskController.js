@@ -24,10 +24,12 @@ exports.taskData = async (req, res) => {
 exports.newTask = async (req, res) => {
   try {
     const userId = req.user.id;
-    const {title, description,taskImg, deadline, priority, status } = req.body
+    const {title, description, deadline, priority, status } = req.body
+
+    const fileImage = req.files?.map(file => file.path) || null
 
     if (!title || !deadline) {
-      return res.json({message: "fields required"})
+      return res.status(400).json({message: "fields required"})
     }
     
     const newTask = await prisma.task.create({
@@ -35,8 +37,8 @@ exports.newTask = async (req, res) => {
         userId,
         title,
         description,
-        taskImg,
-        deadline,
+        taskImg: fileImage,
+        deadline: new Date(deadline),
         priority,
         status
       }
@@ -52,6 +54,7 @@ exports.newTask = async (req, res) => {
 exports.taskDetail = async (req, res) => {
   try {
     const {id} = req.params
+    if (!id)return res.status(401).json({message: "no task selected"})
     const task = await prisma.task.findUnique({
       where: {id}
     })
@@ -63,3 +66,52 @@ exports.taskDetail = async (req, res) => {
     res.status(500).json({error: "failed get task detail", details: error.message})
   }
 }
+
+exports.taskEdit = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const {id} = req.params
+    const {title, description, deadline, priority, status } = req.body
+    const fileImage = req.files?.map(file => file.path) || null
+
+    if (!title || !deadline) {
+      return res.status(400).json({message: "fields required"})
+    }
+
+    const editTask = await prisma.task.update({
+      where: {
+        id
+      },
+      data: {
+        userId,
+        title,
+        description,
+        taskImg: fileImage,
+        deadline: new Date(deadline),
+        priority,
+        status
+      }
+    })
+    res.status(200).json({message: "success update task", editTask})
+  } catch (error) {
+    res.status(500).json({error: "failed edit task", details: error.message})
+  }
+}
+
+exports.taskDelete = async (req, res) => {
+  try {
+    const {id} = req.params;
+    console.log(id)
+
+    if (!id)return res.status(401).json({message: "no task selected"})
+    const deleteTask = await prisma.task.delete({
+      where: {
+        id
+      }
+    })
+    res.status(200).json({message: "succes delete task", deleteTask})
+  } catch (error) {
+    res.status(500).json({error: "failed deleted task ", details: error.message})
+  }
+}
+
