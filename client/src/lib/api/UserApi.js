@@ -1,7 +1,18 @@
-const viteUrl = "http://localhost:3000"
+const viteUrl = "http://localhost:3000/profile"
+
+export const getUsername = async (token) => {
+  return fetch(`${viteUrl}/getUsername`, {
+    method: 'GET',
+    headers: {
+      'Content-type' : 'application/json',
+      'accpect' : 'application/json',
+      'Authorization' : `Bearer ${token}`,
+    }
+  })
+}
 
 export const getUserData = async (token) => {
-  return fetch(`${viteUrl}/profile`, {
+  return fetch(`${viteUrl}`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json',
@@ -12,7 +23,7 @@ export const getUserData = async (token) => {
 }
 
 export const updateImg = async (token, formData) => {
-  return fetch(`${viteUrl}/profile/addAvatar`, {
+  return fetch(`${viteUrl}/addAvatar`, {
     method: 'PATCH',
     headers: {
       // 'Content-type': 'application/json',

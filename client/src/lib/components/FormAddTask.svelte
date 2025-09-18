@@ -23,6 +23,7 @@
   async function handleSubmitNewTask(e) {
     e.preventDefault();
     try {
+      if(!newTask.title || newTask.description || !newTask.deadline || !newTask.priority || !newTask.status)return alertError("Fields Required");
       const formData = new FormData();
       formData.append('title', newTask.title)
       formData.append('description', newTask.description)
@@ -53,15 +54,15 @@
 
 <div class="w-full min-h-screen z-10 fixed inset-0 flex justify-center items-center bg-black/80">
   <div class="w-50%">
-    <h1 class="text-blue-500 text-xl font-bold text-center">Add ToDo</h1>
-    <form action="" class="bg-gray-900 border-2 border-blue-500 shadow-2xl rounded-md space-y-3 px-5 py-5">
+    <h1 class="text-orange-500 text-xl font-bold text-center">Add ToDo</h1>
+    <form action="" class="bg-neutral-900 border-2 border-orange-500 shadow-2xl rounded-md space-y-3 px-5 py-5">
       <div class="flex justify-end">
-        <button onclick={() => closeForm()} class="px-3 py-2 bg-blue-950 rounded-md">Close</button>
+        <button onclick={() => closeForm()} class="px-3 py-2 bg-orange-900 rounded-md">Close</button>
       </div>
       <label for="title" class="font-semibold">Title:</label>
-      <input type="text" name="title" id="title" bind:value={newTask.title} class="w-full border-2 border-blue-900 rounded-md py-2" placeholder="Masukan Title..." required>
+      <input type="text" name="title" id="title" bind:value={newTask.title} class="w-full border-2 border-orange-900 rounded-md py-2" placeholder="Masukan Title..." required>
       <label for="description" class="font-semibold">Description:</label>
-      <input type="text" name="description" id="description" bind:value={newTask.description} class="w-full border-2 border-blue-900 rounded-md py-2" placeholder="Masukan Description..." required>
+      <input type="text" name="description" id="description" bind:value={newTask.description} class="w-full border-2 border-orange-900 rounded-md py-2" placeholder="Masukan Description..." required>
       <label for="taskImg" class="font-semibold">Task Image</label>
       <FileUpload
         name="taskImg"
@@ -81,22 +82,20 @@
         {#snippet iconFileRemove()}<IconRemove class="size-4" />{/snippet}
       </FileUpload>
       <label for="deadline" class="font-semibold">Deadline:</label>
-      <input type="datetime-local" name="deadline" id="deadline" bind:value={newTask.deadline} class="w-full border-2 border-blue-900 rounded-md py-2" required>
+      <input type="datetime-local" name="deadline" id="deadline" bind:value={newTask.deadline} class="w-full border-2 border-orange-900 rounded-md py-2" required>
       <label for="priority" class="block">Priority</label>
-      <select name="priority" id="priority" bind:value={newTask.priority} required class="bg-gray-900 rounded-md w-full py-2 rounde-md border-2 border-blue-900">
-        <!-- <option value="" disabled selected>Status</option> -->
+      <select name="priority" id="priority" bind:value={newTask.priority} required class="bg-black-900 rounded-md w-full py-2 rounde-md border-2 border-orange-900">
         <option selected value="LOW">LOW</option>
         <option value="MEDIUM">MEDIUM</option>
         <option value="HIGH">HIGH</option>
       </select>
       <label for="status" class="block">Status</label>
-      <select name="status" id="status" bind:value={newTask.status} required class="bg-gray-900 rounded-md w-full py-2 rounde-md border-2 border-blue-900">
-        <!-- <option value="" disabled selected>Status</option> -->
+      <select name="status" id="status" bind:value={newTask.status} required class="bg-black-900 rounded-md w-full py-2 rounde-md border-2 border-orange-900">
         <option selected value="PENDING">Pending</option>
         <option value="INPROGRESS">In Progress</option>
         <option value="COMPLETED">Finish</option>
       </select>
-      <button type="submit" onclick={handleSubmitNewTask} class="w-full bg-blue-950 py-2 rounded-md font-bold mt-2">Submit</button>
+      <button type="submit" onclick={handleSubmitNewTask} class="w-full bg-orange-700 py-2 rounded-md font-bold mt-2">Submit</button>
     </form>
   </div>
 </div>
