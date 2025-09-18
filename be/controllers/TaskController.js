@@ -72,7 +72,7 @@ exports.taskEdit = async (req, res) => {
     const userId = req.user.id;
     const {id} = req.params
     const {title, description, deadline, priority, status } = req.body
-    const fileImage = req.files?.map(file => file.path) || null
+    const fileImage = req.files?.map(file => file.path)
 
     if (!title || !deadline) {
       return res.status(400).json({message: "fields required"})
