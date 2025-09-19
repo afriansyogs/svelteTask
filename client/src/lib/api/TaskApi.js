@@ -23,19 +23,20 @@ export const submitTask = async (token, formData) => {
   })
 }
 
-export const taskDetail = async (token, {id}) => {
-  fetch(`${viteUrl}/${id}`, {
+export const taskDetail = async (token, id) => {
+  return fetch(`${viteUrl}/taskDetail/${id}`, {
     method: 'GET',
     headers: {
       'Content-type': 'application/json',
       'accept': 'application/json',
       'Authorization': `Bearer ${token}`
-    }
+    },
+    cache: 'no-store'
   })
 }
 
 export const updatedTask = async (token, formData, {id}) => {
-  fetch(`${viteUrl}/${id}`, {
+  return fetch(`${viteUrl}/${id}`, {
     method: 'PATCH',
     headers: {
       'Content-type': 'application/json',

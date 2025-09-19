@@ -12,6 +12,7 @@
   import { FileUpload } from "@skeletonlabs/skeleton-svelte";
   import { alertError, alertSuccess } from "$lib/alert.js";
   import TaskData from "$lib/components/TaskData.svelte";
+  import IconPlus from '@lucide/svelte/icons/plus';
 
   let taskItem = $state([]);
   let userItem = $state([]);
@@ -119,30 +120,21 @@
   });
 </script>
 
-<div class="">
-  <div class="mt-2">
-    <img
+<div class="pb-20">
+  <div class="mt-2 border-b-2 mx-10">
+    <!-- <img
       src="/img/undraw_completed-tasks.png"
       alt="TaskList-img"
       class="w-[23%] mx-auto"
-    />
+    /> -->
     {#if username}
-      <h1 class="text-center font-bold text-3xl">
+      <h1 class="text-center font-bold text-5xl mt-10">
         Halo, <span class="text-orange-400 font-extrabold">{username}</span>
       </h1>
-      <h1 class="text-center font-bold text-xl">Yuk, List Tugasmu Hari ini!</h1>
+      <h1 class="text-center font-medium text-3xl mb-10">Yuk, List Tugasmu Hari ini!</h1>
     {:else}
       <h1>hola</h1>
     {/if}
-  </div>
-
-  <div class="flex justify-end px-10">
-    <button
-      onclick={toogleFormNewTask}
-      type="button"
-      class="px-4 py-2 bg-orange-500 rounded-md text-white font-bold"
-      >Add Task
-    </button>
   </div>
 
   {#if formAdd}
@@ -159,7 +151,13 @@
     <TaskData dataTask={taskItem} />
   {/if}
 
-  <FileUpload
+  <div class="fixed bottom-10 right-8">
+    <button onclick={toogleFormNewTask} class="px-5 py-5 rounded-full bg-orange-500 hover:bg-amber-700 active:scale-75 transition-transform duration-150">
+      <IconPlus size={32} strokeWidth={2.5}/>
+    </button>
+  </div>
+
+  <!-- <FileUpload
     name="userImg"
     accept="image/*"
     maxFiles={1}
@@ -171,5 +169,5 @@
     classes="w-full"
   />
   <button type="button" onclick={handleAddAvatar}>add</button>
-  <h1>{userImg}</h1>
+  <h1>{userImg}</h1> -->
 </div>
