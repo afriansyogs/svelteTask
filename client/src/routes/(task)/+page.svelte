@@ -131,7 +131,7 @@
       <h1 class="text-center font-bold text-5xl mt-10">
         Halo, <span class="text-orange-400 font-extrabold">{username}</span>
       </h1>
-      <h1 class="text-center font-medium text-3xl mb-10">Yuk, List Tugasmu Hari ini!</h1>
+      <h1 class="text-center font-bold text-3xl mb-10">Yuk, List Tugasmu Hari ini!</h1>
     {:else}
       <h1>hola</h1>
     {/if}
