@@ -40,9 +40,18 @@
 </script>
 
 <div class="">
+  <h1 class="text-4xl font-bold text-center mt-10">Detail Task!</h1>
+  <h1>Task:</h1>
   <h1>{detailData?.title}</h1>
+  <h1>Description:</h1>
   <h1>{detailData?.description}</h1>
+  <h1>Deadline:</h1>
   <h1>{detailData?.deadline}</h1>
+  <h1>Priority:</h1>
   <h1>{detailData?.priority}</h1>
+  <h1>Status:</h1>
   <h1>{detailData?.status}</h1>
+  {#each detailData.taskImg as imgTask}
+    <h1>{imgTask}</h1>
+  {/each}
 </div>

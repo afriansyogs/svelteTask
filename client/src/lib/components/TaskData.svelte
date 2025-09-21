@@ -3,7 +3,7 @@
   import IconEye from '@lucide/svelte/icons/eye';
   import IconTrash2 from '@lucide/svelte/icons/trash-2';
   
-  let { dataTask } = $props()
+  let { dataTask, handleDelete } = $props()
   console.log(`nih data nih ${dataTask}`)
 </script>
 
@@ -14,8 +14,8 @@
       <h2 class="text-xl font-bold text-red-400 mb-4">⏳ Pending</h2>
         {#each dataTask.filter(task => task.status === 'PENDING') as task (task.id)}
           <div class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
-            {#if task.taskImg}
-              <img src={`http://localhost:3000/${task.taskImg[0]}`} alt={task.title} class="w-full max-h-48 rounded-md object-cover">
+            {#if task.taskImg && task.taskImg.length > 0}
+              <img src="http://localhost:3000/{task.taskImg[0]}" alt={task.title} class="w-full max-h-48 rounded-md object-cover">
             {/if}
             <h3 class="font-semibold text-lg text-white">{task.title || 'Tanpa Judul'}</h3>
             <p class="text-sm text-gray-300">{task.description}</p>
@@ -34,10 +34,10 @@
               <a href="/{task.id}" class="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700 transition shadow">
                 <IconEye />
               </a>
-              <button class="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition shadow">
+              <a href="/{task.id}/edit" class="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition shadow">
                 <IconSquarePen />
-              </button>
-              <button class="px-4 py-2 rounded-md bg-red-700 text-white hover:bg-red-800 transition shadow">
+              </a>
+              <button onclick={(e) => handleDelete(e, task.id)} class="px-4 py-2 rounded-md bg-red-700 text-white hover:bg-red-800 transition shadow">
                 <IconTrash2 />
               </button>
             </div>
@@ -49,7 +49,7 @@
       <h2 class="text-xl font-bold text-yellow-400 mb-4">🚧 In Progress</h2>
         {#each dataTask.filter(task => task.status === 'INPROGRESS') as task (task.id)}
           <div class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
-            {#if task.taskImg}
+            {#if task.taskImg && task.taskImg.length > 0}
               <img src={`http://localhost:3000/${task.taskImg[0]}`} alt={task.title} class="w-full max-h-48 rounded-md object-cover">
             {/if}
             <h3 class="font-semibold text-lg text-white">{task.title}</h3>
@@ -66,13 +66,13 @@
               {task.priority}
             </span>
             <div class="flex justify-end space-x-3 mt-4">
-              <button class="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700 transition shadow">
+              <a href="/{task.id}" class="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700 transition shadow">
                 <IconEye />
-              </button>
-              <button class="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition shadow">
+              </a>
+              <a href="/{task.id}/edit" class="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition shadow">
                 <IconSquarePen />
-              </button>
-              <button class="px-4 py-2 rounded-md bg-red-700 text-white hover:bg-red-800 transition shadow">
+              </a>
+              <button onclick={(e) => handleDelete(e, task.id)} class="px-4 py-2 rounded-md bg-red-700 text-white hover:bg-red-800 transition shadow">
                 <IconTrash2 />
               </button>
             </div>
@@ -84,7 +84,7 @@
       <h2 class="text-xl font-bold text-green-400 mb-4">✅ Completed</h2>
         {#each dataTask.filter(task => task.status === 'COMPLETED') as task (task.id)}
           <div class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
-            {#if task.taskImg}
+            {#if task.taskImg && task.taskImg.length > 0}
               <img src={`http://localhost:3000/${task.taskImg[0]}`} alt={task.title} class="w-full max-h-48 rounded-md object-cover">
             {/if}
             <h3 class="font-semibold text-lg text-white">{task.title}</h3>
@@ -101,13 +101,13 @@
               {task.priority}
             </span>
             <div class="flex justify-end space-x-3 mt-4">
-              <button class="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700 transition shadow">
+              <a href="/{task.id}" class="px-4 py-2 rounded-md bg-gray-600 text-white hover:bg-gray-700 transition shadow">
                 <IconEye />
-              </button>
-              <button class="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition shadow">
+              </a>
+              <a href="/{task.id}/edit" class="px-4 py-2 rounded-md bg-orange-600 text-white hover:bg-orange-700 transition shadow">
                 <IconSquarePen />
-              </button>
-              <button class="px-4 py-2 rounded-md bg-red-700 text-white hover:bg-red-800 transition shadow">
+              </a>
+              <button onclick={(e) => handleDelete(e, task.id)} class="px-4 py-2 rounded-md bg-red-700 text-white hover:bg-red-800 transition shadow">
                 <IconTrash2 />
               </button>
             </div>

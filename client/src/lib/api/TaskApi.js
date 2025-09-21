@@ -35,12 +35,13 @@ export const taskDetail = async (token, id) => {
   })
 }
 
-export const updatedTask = async (token, formData, {id}) => {
-  return fetch(`${viteUrl}/${id}`, {
+export const updatedTask = async (token, id, formData) => {
+  console.log(id)
+  return fetch(`${viteUrl}/editTask/${id}`, {
     method: 'PATCH',
     headers: {
-      'Content-type': 'application/json',
-      'accept': 'application/json',
+      // 'Content-type': 'application/json',
+      // 'accept': 'application/json',
       'Authorization': `Bearer ${token}`
     },
     body: formData

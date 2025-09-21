@@ -76,11 +76,14 @@
 
   async function fetchUsername() {
     try {
+      isLoading
       const fetchUsername = await getUsername(token);
       const response = await fetchUsername.json();
       username = response.userNameData.username;
     } catch (error) {
       console.log(error.message);
+    } finally {
+      isLoading = false
     }
   }
 
@@ -132,8 +135,6 @@
         Halo, <span class="text-orange-400 font-extrabold">{username}</span>
       </h1>
       <h1 class="text-center font-bold text-3xl mb-10">Yuk, List Tugasmu Hari ini!</h1>
-    {:else}
-      <h1>hola</h1>
     {/if}
   </div>
 
@@ -145,10 +146,10 @@
     <p>Loading...</p>
   {:else if errorMessage}
     <p>{errorMessage}</p>
-  {:else if taskItem.length === 0}
-    <p>TIdak ada data</p>
+  {:else if !isLoading && (!taskItem || taskItem.length === 0)}
+    <p class="font-bold text-2xl text-center mt-10">Kamu belum membuat list task!</p>
   {:else}
-    <TaskData dataTask={taskItem} />
+    <TaskData dataTask={taskItem} handleDelete={handleDeleteTask}/>
   {/if}
 
   <div class="fixed bottom-10 right-8">

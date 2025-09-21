@@ -23,7 +23,7 @@
   async function handleSubmitNewTask(e) {
     e.preventDefault();
     try {
-      if(!newTask.title || newTask.description || !newTask.deadline || !newTask.priority || !newTask.status)return alertError("Fields Required");
+      if(!newTask.title || !newTask.description || !newTask.deadline || !newTask.priority || !newTask.status)return alertError("Fields Required");
       const formData = new FormData();
       formData.append('title', newTask.title)
       formData.append('description', newTask.description)
