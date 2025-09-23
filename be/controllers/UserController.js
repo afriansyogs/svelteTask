@@ -32,24 +32,32 @@ exports.getUserData = async (req, res) => {
   }
 }
 
-exports.addUserImg = async (req, res) => {
+exports.updateUserData = async (req, res) => {
   try {
     const userId = req.user.id
+    const {username, email} = req.body
     const userImg = req.file
     console.log('req.file:', req.file);
     console.log('req.body:', req.body);
     // return
-    if (!userImg) return res.status(400).json({error: 'file required'})
+    if (!username || !email)return res.status(400).json({error: 'file required'})
 
-    const newAvatar = await prisma.user.update({
+    const userData = {
+      username,
+      email
+    }
+
+    if (userImg) {
+      userData.userImg = userImg.path
+    }
+
+    const update = await prisma.user.update({
       where: {
         id: userId
       },
-      data: {
-        userImg: userImg.path
-      }
+      data: userData
     });
-    res.status(200).json({message: "succes upload file", newAvatar})
+    res.status(200).json({message: "succes upload file", update})
   } catch (error) {
     res.status(500).json({error: "failed upload file", details: error.message})
   }
