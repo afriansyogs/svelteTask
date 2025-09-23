@@ -8,11 +8,17 @@
   import IconlistChecks from '@lucide/svelte/icons/list-checks';
   import IconCircleUserRound from '@lucide/svelte/icons/circle-user-round';
   import IconLogOut from '@lucide/svelte/icons/log-out';
+  import { goto } from '$app/navigation';
 
   let isExpansed = $state(true);
 
   function toggleExpanded() {
     isExpansed = !isExpansed;
+  }
+
+  function handleLogOut() {
+    localStorage.removeItem('token')
+    goto('/login')
   }
 </script>
 
@@ -35,6 +41,6 @@
     {/each} -->
   {/snippet}
   {#snippet footer()}
-    <Navigation.Tile labelExpanded="Logout" href="/settings" title="Logout"><IconLogOut /></Navigation.Tile>
+    <Navigation.Tile labelExpanded="Logout" title="Logout" onclick={handleLogOut}><IconLogOut /></Navigation.Tile>
   {/snippet}
 </Navigation.Rail>

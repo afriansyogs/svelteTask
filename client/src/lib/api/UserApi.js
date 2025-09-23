@@ -22,8 +22,8 @@ export const getUserData = async (token) => {
   })
 }
 
-export const updateImg = async (token, formData) => {
-  return fetch(`${viteUrl}/addAvatar`, {
+export const updateUserData = async (token, formData) => {
+  return fetch(`${viteUrl}/update`, {
     method: 'PATCH',
     headers: {
       // 'Content-type': 'application/json',

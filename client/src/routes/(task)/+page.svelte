@@ -8,7 +8,7 @@
   import { goto } from "$app/navigation";
   import FormAddTask from "$lib/components/FormAddTask.svelte";
   import { fade } from "svelte/transition";
-  import { getUserData, getUsername, updateImg } from "$lib/api/UserApi.js";
+  import { getUserData, getUsername } from "$lib/api/UserApi.js";
   import { FileUpload } from "@skeletonlabs/skeleton-svelte";
   import { alertError, alertSuccess } from "$lib/alert.js";
   import TaskData from "$lib/components/TaskData.svelte";
@@ -92,6 +92,10 @@
     try {
       isLoading = true;
       const taskList = await taskData(token);
+      if (taskList.status === 401) {
+        await goto('/login');
+        return;
+      }
       const response = await taskList.json();
       taskItem = response.task;
     } catch (error) {
@@ -157,18 +161,4 @@
       <IconPlus size={32} strokeWidth={2.5}/>
     </button>
   </div>
-
-  <!-- <FileUpload
-    name="userImg"
-    accept="image/*"
-    maxFiles={1}
-    onFileChange={({ acceptedFiles }) => {
-      selectedFiles = acceptedFiles;
-      console.log("File dipilih:", acceptedFiles);
-    }}
-    onFileReject={console.error}
-    classes="w-full"
-  />
-  <button type="button" onclick={handleAddAvatar}>add</button>
-  <h1>{userImg}</h1> -->
 </div>
