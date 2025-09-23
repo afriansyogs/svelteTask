@@ -1,57 +1,102 @@
 <script>
-	import { taskDetail } from './../../../lib/api/TaskApi.js';
+  import { formatDateTimeLocal } from "./../../../lib/utils/FormatDateTime.js";
+  import { taskDetail } from "./../../../lib/api/TaskApi.js";
   import { page } from "$app/state";
-  import { alertError } from '$lib/alert';
-  import { onMount } from 'svelte';
+  import { alertError } from "$lib/alert";
+  import { onMount } from "svelte";
 
-  const token = localStorage.getItem('token');
-  const {id} = page.params;
-  console.log(id)
+  const token = localStorage.getItem("token");
+  const { id } = page.params;
+  console.log(id);
 
   let detailData = $state({
     id: id,
-    title: '',
-    description: '',
+    title: "",
+    description: "",
     taskImg: [],
-    deadline: '',
-    priority: '',
-    status: '',
-  })
+    deadline: "",
+    priority: "",
+    status: "",
+  });
 
   async function fetchDetailTask() {
     try {
-      const detailTask = await taskDetail(token, id)
-      const response = await detailTask.json()
+      const detailTask = await taskDetail(token, id);
+      const response = await detailTask.json();
       if (detailTask.status === 200) {
-        detailData = response.task
+        detailData = response.task;
       } else {
-        await alertError(detailTask.error)
+        await alertError(detailTask.error);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
-  
-  $inspect(detailData)
+
+  $inspect(detailData);
 
   onMount(async () => {
     await fetchDetailTask();
-  })
+  });
 </script>
 
-<div class="">
+<div class="w-[95%] mx-auto">
   <h1 class="text-4xl font-bold text-center mt-10">Detail Task!</h1>
-  <h1>Task:</h1>
-  <h1>{detailData?.title}</h1>
-  <h1>Description:</h1>
-  <h1>{detailData?.description}</h1>
-  <h1>Deadline:</h1>
-  <h1>{detailData?.deadline}</h1>
-  <h1>Priority:</h1>
-  <h1>{detailData?.priority}</h1>
-  <h1>Status:</h1>
-  <h1>{detailData?.status}</h1>
-  {#each detailData.taskImg as imgTask}
-    <h1>{imgTask}</h1>
-  {/each}
+  <div class="space-y-5">
+    <div class="">
+      <h1 class="font-semibold">Title:</h1>
+      <div class="bg-neutral-900 w-full h-auto py-2 rounded-md">
+        <h1 class="ms-2">{detailData?.title}</h1>
+      </div>
+    </div>
+    <div class="">
+      <h1 class="font-semibold">Description:</h1>
+      <div class="bg-neutral-900 w-full h-auto py-2 rounded-md">
+        <h1 class="ms-2">{detailData?.description}</h1>
+      </div>
+    </div>
+    <div class="">
+      <h1 class="font-semibold">Description:</h1>
+      <div class="bg-neutral-900 w-full h-auto py-2 rounded-md">
+        <h1 class="ms-2">{formatDateTimeLocal(detailData?.deadline)}</h1>
+      </div>
+    </div>
+    <div class="flex space-x-5">
+      <div class="w-full">
+        <h1 class="font-semibold">Priority:</h1>
+        <div class="bg-neutral-900 w-full h-auto py-2 rounded-md">
+          <h1
+            class="ms-2
+                    {detailData?.priority === 'LOW'
+                      ? 'text-cyan-700'
+                    : detailData?.priority === 'MEDIUM'
+                      ? 'text-amber-600'
+                      : 'text-red-700'}"
+          >
+            {detailData?.priority}
+          </h1>
+        </div>
+      </div>
+      <div class="w-full">
+        <h1 class="font-semibold">Status:</h1>
+        <div class="bg-neutral-900 w-full h-auto py-2 rounded-md">
+          <h1
+            class="ms-2
+                  {detailData?.status === 'PENDING'
+                    ? 'text-red-500'
+                  : detailData?.status === 'INPROGRESS'
+                    ? 'text-yellow-500'
+                    : 'text-green-500'}"
+          >
+            {detailData?.status}
+          </h1>
+        </div>
+      </div>
+    </div>
+    <div class="grid grid-cols-2 gap-5">
+      {#each detailData?.taskImg as imgTask}
+        <img src="http://localhost:3000/{imgTask}" alt="" class="w-full h-[75%] object-cover rounded-md">
+      {/each}
+    </div>
+  </div>
 </div>

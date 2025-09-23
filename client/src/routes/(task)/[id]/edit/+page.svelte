@@ -45,7 +45,6 @@
     try {
       let response = await taskDetail(token, id)
       let responseBody = await response.json()
-      // task = response
       if (response.status === 200) {
         task.title = responseBody.task.title
         task.description = responseBody.task.description
@@ -53,7 +52,6 @@
         task.deadline = formatDateTimeLocal(responseBody.task.deadline)
         task.priority = responseBody.task.priority
         task.status = responseBody.task.status
-        // oldImg = responseBody.task.taskImg
       } else {
         await alertError(error.messages)
       }
@@ -97,18 +95,39 @@
   })
 </script>
 
-<div class="flex min-h-[100dvh] items-center justify-center">
-  <div class="w-[85%]">
-    <h1 class="text-center font-bold text-4xl">Edit Task</h1>
-    <form onsubmit={handleUpdate} class="bg-neutral-800 border-2 border-black shadow-xl rounded-md space-y-3 px-5 py-5 mt-4">
-      <div class="flex justify-end">
-        <a href="/" class="px-3 py-2 bg-orange-900 rounded-md">Close</a>
+<div class="w-[95%] mx-auto">
+  <h1 class="text-4xl font-bold text-center mt-10">Edit Task</h1>
+    <form onsubmit={handleUpdate} class="space-y-5">
+      <div>
+        <label for="title" class="text-base">Title:</label>
+        <input type="text" name="title" id="title" bind:value={task.title} class="w-full bg-neutral-900 rounded-md py-2 ps-2" placeholder={task.title} required>
       </div>
-      <label for="title" class="font-semibold">Title:</label>
-      <input type="text" name="title" id="title" bind:value={task.title} class="w-full border-2 border-neutral-600 rounded-md py-2" placeholder={task.title} required>
-      <label for="description" class="font-semibold">Description:</label>
-      <input type="text" name="description" id="description" bind:value={task.description} class="w-full border-2 border-neutral-600 rounded-md py-2" placeholder={task.description} required>
-      <label for="taskImg" class="font-semibold">Task Image</label>
+      <div>
+        <label class="label">
+          <span class="label-text text-base">Description</span>
+          <textarea class="textarea bg-neutral-900" rows="4" bind:value={task.description} placeholder={task.description} required></textarea>
+        </label>
+      </div>
+      <div>
+        <label for="deadline" class="text-base">Deadline:</label>
+        <input type="datetime-local" name="deadline" id="deadline" bind:value={task.deadline} class="bg-neutral-900 w-full rounded-md py-2 ps-1" required>
+      </div>
+      <div class="flex space-x-5 items-center">
+        <label for="priority" class="text-base">Priority</label>
+      <select name="priority" id="priority" bind:value={task.priority} required class="bg-neutral-900 rounded-md w-full py-2 rounde-md">
+        <option selected value="LOW">LOW</option>
+        <option value="MEDIUM">MEDIUM</option>
+        <option value="HIGH">HIGH</option>
+      </select>
+      <label for="status" class="text-base">Status</label>
+      <select name="status" id="status" bind:value={task.status} required class="bg-neutral-900 rounded-md w-full py-2 rounde-md">
+        <option selected value="PENDING">Pending</option>
+        <option value="INPROGRESS">In Progress</option>
+        <option value="COMPLETED">Finish</option>
+      </select>
+      </div>
+      <div>
+        <label for="taskImg" class="font-semibold">Task Image</label>
       <FileUpload
         name="taskImg"
         accept="image/*"
@@ -126,21 +145,7 @@
         {#snippet iconFile()}<IconFile class="size-4" />{/snippet}
         {#snippet iconFileRemove()}<IconRemove class="size-4" />{/snippet}
       </FileUpload>
-      <label for="deadline" class="font-semibold">Deadline:</label>
-      <input type="datetime-local" name="deadline" id="deadline" bind:value={task.deadline} class="w-full border-2 border-neutral-600 rounded-md py-2" required>
-      <label for="priority" class="block">Priority</label>
-      <select name="priority" id="priority" bind:value={task.priority} required class="bg-black-900 rounded-md w-full py-2 rounde-md border-2 border-neutral-600">
-        <option selected value="LOW">LOW</option>
-        <option value="MEDIUM">MEDIUM</option>
-        <option value="HIGH">HIGH</option>
-      </select>
-      <label for="status" class="block">Status</label>
-      <select name="status" id="status" bind:value={task.status} required class="bg-black-900 rounded-md w-full py-2 rounde-md border-2 border-neutral-600">
-        <option selected value="PENDING">Pending</option>
-        <option value="INPROGRESS">In Progress</option>
-        <option value="COMPLETED">Finish</option>
-      </select>
-      <button type="submit" class="w-full bg-orange-700 py-2 rounded-md font-bold mt-2">Submit</button>
+      </div>
+      <button type="submit" class="w-full bg-orange-700 py-3 rounded-md font-bold mt-2">Submit</button>
     </form>
-  </div>
-</div> 
+</div>

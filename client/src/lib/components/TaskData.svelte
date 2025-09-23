@@ -2,6 +2,7 @@
   import IconSquarePen from '@lucide/svelte/icons/square-pen';
   import IconEye from '@lucide/svelte/icons/eye';
   import IconTrash2 from '@lucide/svelte/icons/trash-2';
+  import { formatDateTimeLocal } from '$lib/utils/FormatDateTime';
   
   let { dataTask, handleDelete } = $props()
   console.log(`nih data nih ${dataTask}`)
@@ -19,7 +20,7 @@
             {/if}
             <h3 class="font-semibold text-lg text-white">{task.title || 'Tanpa Judul'}</h3>
             <p class="text-sm text-gray-300">{task.description}</p>
-            <p class="text-xs text-gray-500 mt-2">{task.deadline}</p>
+            <p class="text-xs text-gray-500 mt-2">{formatDateTimeLocal(task.deadline)}</p>
             <span class={`text-xs px-2 py-1 rounded inline-block text-white mt-2 ${
                 task.priority === 'LOW'
                   ? 'bg-cyan-700'
@@ -44,6 +45,7 @@
           </div>
         {/each}
     </div>
+
     <!-- In Progress -->
     <div class="flex-1 bg-[#2a2a2a] p-5 rounded-lg shadow-md border-l-4 border-yellow-500">
       <h2 class="text-xl font-bold text-yellow-400 mb-4">🚧 In Progress</h2>
@@ -54,7 +56,7 @@
             {/if}
             <h3 class="font-semibold text-lg text-white">{task.title}</h3>
             <p class="text-sm text-gray-300">{task.description}</p>
-            <p class="text-xs text-gray-500 mt-2">{task.deadline}</p>
+            <p class="text-xs text-gray-500 mt-2">{formatDateTimeLocal(task.deadline)}</p>
             <span class={`text-xs px-2 py-1 rounded inline-block text-white mt-2 ${
                 task.priority === 'LOW'
                   ? 'bg-cyan-700'
@@ -79,6 +81,7 @@
           </div>
         {/each}
     </div>
+    
     <!-- Completed -->
     <div class="flex-1 bg-[#2a2a2a] p-5 rounded-lg shadow-md border-l-4 border-green-500">
       <h2 class="text-xl font-bold text-green-400 mb-4">✅ Completed</h2>
@@ -89,7 +92,7 @@
             {/if}
             <h3 class="font-semibold text-lg text-white">{task.title}</h3>
             <p class="text-sm text-gray-300">{task.description}</p>
-            <p class="text-xs text-gray-500 mt-2">{task.deadline}</p>
+            <p class="text-xs text-gray-500 mt-2">{formatDateTimeLocal(task.deadline)}</p>
             <span class={`text-xs px-2 py-1 rounded inline-block text-white mt-2 ${
                 task.priority === 'LOW'
                   ? 'bg-cyan-700'

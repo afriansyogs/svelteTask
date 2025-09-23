@@ -78,20 +78,26 @@ exports.taskEdit = async (req, res) => {
       return res.status(400).json({message: "fields required"})
     }
 
+    const updateData = {
+      userId,
+      title,
+      description,
+      deadline: new Date(deadline),
+      priority,
+      status
+    }
+
+    if(fileImage && fileImage.length > 0) {
+      updateData.taskImg = fileImage
+    }
+
     const editTask = await prisma.task.update({
       where: {
         id
       },
-      data: {
-        userId,
-        title,
-        description,
-        taskImg: fileImage,
-        deadline: new Date(deadline),
-        priority,
-        status
-      }
+      data: updateData
     })
+    
     res.status(200).json({message: "success update task", editTask})
   } catch (error) {
     res.status(500).json({error: "failed edit task", details: error.message})
