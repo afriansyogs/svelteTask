@@ -4,6 +4,7 @@
   import IconDropzone from '@lucide/svelte/icons/image-plus';
   import IconFile from '@lucide/svelte/icons/paperclip';
   import IconRemove from '@lucide/svelte/icons/circle-x';
+  import IconX from '@lucide/svelte/icons/x';
 
   import { goto } from "$app/navigation";
   import { page } from "$app/state";
@@ -24,6 +25,8 @@
     priority: '',
     status: '',
   })
+  $inspect(typeof task.taskImg)
+  let imgEdit = $state([])
   // let oldImg = $state([])
 
   // let finalImg = $derived.by(() => {
@@ -34,6 +37,12 @@
   //   console.log(oldImg.length)
   //   return allImg
   // })
+
+  function deleteImg(e, img) {
+    e.preventDefault()
+    task.taskImg = task.taskImg.filter((item) => item !== img)
+    console.log(task.taskImg)
+  }
 
   function formatDateTimeLocal(date) {
     const dateTime = new Date(date)
@@ -70,7 +79,8 @@
       formData.append('deadline', task.deadline)
       formData.append('priority', task.priority)
       formData.append('status', task.status)
-      task.taskImg.forEach((item, index) => {
+      formData.append('oldImg', task.taskImg)
+      imgEdit.forEach((item, index) => {
         formData.append('taskImg', item)
       });
       
@@ -128,23 +138,36 @@
       </div>
       <div>
         <label for="taskImg" class="font-semibold">Task Image</label>
-      <FileUpload
-        name="taskImg"
-        accept="image/*"
-        maxFiles={3}
-        subtext="Attach up to 3 files."
-        onFileChange={({acceptedFiles}) => {
-          task.taskImg = acceptedFiles;
-          console.log(acceptedFiles)
-          console.log(typeof acceptedFiles)
-        }}
-        onFileReject={console.error}
-        classes="w-full"
-      >
-        {#snippet iconInterface()}<IconDropzone class="size-8" />{/snippet}
-        {#snippet iconFile()}<IconFile class="size-4" />{/snippet}
-        {#snippet iconFileRemove()}<IconRemove class="size-4" />{/snippet}
-      </FileUpload>
+        <FileUpload
+          name="taskImg"
+          accept="image/*"
+          maxFiles={3}
+          subtext="Attach up to 3 files."
+          onFileChange={({acceptedFiles}) => {
+            // task.taskImg = acceptedFiles;
+            imgEdit = acceptedFiles
+            console.info(imgEdit)
+            console.log(acceptedFiles)
+          }}
+          onFileReject={console.error}
+          classes="w-full"
+        >
+          {#snippet iconInterface()}<IconDropzone class="size-8" />{/snippet}
+          {#snippet iconFile()}<IconFile class="size-4" />{/snippet}
+          {#snippet iconFileRemove()}<IconRemove class="size-4" />{/snippet}
+        </FileUpload>
+        <div class="flex gap-4 mt-4">
+          {#each task.taskImg as img}
+          {console.log(`ini${typeof img}`)}
+            <div class="flex flex-col items-center w-1/2">
+              <div class="bg-neutral-900 w-full h-10 flex justify-between items-center px-2">
+                {img}
+                <IconX onclick={(e) => deleteImg(e, img)} class="cursor-pointer"/>
+              </div>
+              <img src="http://localhost:3000/{img}" alt="Task Img" class="w-full h-40 object-cover">
+            </div>
+          {/each}
+        </div>
       </div>
       <button type="submit" class="w-full bg-orange-700 py-3 rounded-md font-bold mt-2">Submit</button>
     </form>
