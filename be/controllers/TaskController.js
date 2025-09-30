@@ -71,12 +71,16 @@ exports.taskEdit = async (req, res) => {
   try {
     const userId = req.user.id;
     const {id} = req.params
-    const {title, description, deadline, priority, status } = req.body
+    const {title, description, deadline, priority, status, oldImg } = req.body
     const fileImage = req.files?.map(file => file.path)
-
+    console.log(`old img:${oldImg}`)
     if (!title || !deadline) {
       return res.status(400).json({message: "fields required"})
     }
+
+    img = oldImg.split(",")
+    image = [...img, ...fileImage]
+    console.log(`ini image: ${image}`)
 
     const updateData = {
       userId,
@@ -87,8 +91,8 @@ exports.taskEdit = async (req, res) => {
       status
     }
 
-    if(fileImage && fileImage.length > 0) {
-      updateData.taskImg = fileImage
+    if(image && image.length > 0) {
+      updateData.taskImg = image
     }
 
     const editTask = await prisma.task.update({
