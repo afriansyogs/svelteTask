@@ -157,7 +157,7 @@
           {#snippet iconFileRemove()}<IconRemove class="size-4" />{/snippet}
         </FileUpload>
         <div class="flex gap-4 mt-4">
-          {#each task.taskImg as img}
+          {#each task.taskImg.filter(img => img.trim() !== "") as img}
           {console.log(`ini${typeof img}`)}
             <div class="flex flex-col items-center w-1/2">
               <div class="bg-neutral-900 w-full h-10 flex justify-between items-center px-2">

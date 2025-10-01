@@ -15,7 +15,7 @@
       <h2 class="text-xl font-bold text-red-400 mb-4">⏳ Pending</h2>
         {#each dataTask.filter(task => task.status === 'PENDING') as task (task.id)}
           <div class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
-            {#if task.taskImg && task.taskImg.length > 0}
+            {#if task.taskImg && task.taskImg.filter(img => img.trim() !== "").length > 0}
               <img src="http://localhost:3000/{task.taskImg[0]}" alt={task.title} class="w-full max-h-48 rounded-md object-cover">
             {/if}
             <h3 class="font-semibold text-lg text-white">{task.title || 'Tanpa Judul'}</h3>
@@ -51,7 +51,7 @@
       <h2 class="text-xl font-bold text-yellow-400 mb-4">🚧 In Progress</h2>
         {#each dataTask.filter(task => task.status === 'INPROGRESS') as task (task.id)}
           <div class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
-            {#if task.taskImg && task.taskImg.length > 0}
+            {#if task.taskImg && task.taskImg.filter(img => img.trim() !== "").length > 0}
               <img src={`http://localhost:3000/${task.taskImg[0]}`} alt={task.title} class="w-full max-h-48 rounded-md object-cover">
             {/if}
             <h3 class="font-semibold text-lg text-white">{task.title}</h3>
@@ -87,7 +87,7 @@
       <h2 class="text-xl font-bold text-green-400 mb-4">✅ Completed</h2>
         {#each dataTask.filter(task => task.status === 'COMPLETED') as task (task.id)}
           <div class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
-            {#if task.taskImg && task.taskImg.length > 0}
+            {#if task.taskImg && task.taskImg.filter(img => img.trim() !== "").length > 0}
               <img src={`http://localhost:3000/${task.taskImg[0]}`} alt={task.title} class="w-full max-h-48 rounded-md object-cover">
             {/if}
             <h3 class="font-semibold text-lg text-white">{task.title}</h3>
