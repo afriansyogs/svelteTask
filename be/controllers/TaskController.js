@@ -78,8 +78,8 @@ exports.taskEdit = async (req, res) => {
       return res.status(400).json({message: "fields required"})
     }
 
-    img = oldImg.split(",")
-    image = [...img, ...fileImage]
+    let img = oldImg.split(",")
+    let image = [...fileImage, ...img]
     console.log(`ini image: ${image}`)
 
     const updateData = {
