@@ -7,7 +7,7 @@
   } from "./../../lib/api/TaskApi.js";
   import { goto } from "$app/navigation";
   import FormAddTask from "$lib/components/FormAddTask.svelte";
-  import { fade } from "svelte/transition";
+  import { fade, fly } from "svelte/transition";
   import { getUserData, getUsername } from "$lib/api/UserApi.js";
   import { FileUpload } from "@skeletonlabs/skeleton-svelte";
   import { alertError, alertSuccess } from "$lib/alert.js";

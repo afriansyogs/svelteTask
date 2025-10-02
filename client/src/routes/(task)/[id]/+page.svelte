@@ -94,7 +94,7 @@
       </div>
     </div>
     <div class="grid grid-cols-2 gap-5">
-      {#each detailData?.taskImg as imgTask}
+      {#each detailData?.taskImg && detailData.taskImg.filter(img => img.trim() !== "") as imgTask}
         <img src="http://localhost:3000/{imgTask}" alt="" class="w-full h-[75%] object-cover rounded-md">
       {/each}
     </div>

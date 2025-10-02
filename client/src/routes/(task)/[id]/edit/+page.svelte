@@ -12,6 +12,7 @@
   import { taskDetail, updatedTask } from "$lib/api/TaskApi";
   import { error } from "@sveltejs/kit";
   import { onMount } from "svelte";
+  import { fly } from 'svelte/transition';
 
   let token = localStorage.getItem('token')
   let {id} = page.params
@@ -159,7 +160,7 @@
         <div class="flex gap-4 mt-4">
           {#each task.taskImg.filter(img => img.trim() !== "") as img}
           {console.log(`ini${typeof img}`)}
-            <div class="flex flex-col items-center w-1/2">
+            <div out:fly={{ y:20 }} class="flex flex-col items-center w-1/2">
               <div class="bg-neutral-900 w-full h-10 flex justify-between items-center px-2">
                 {img}
                 <IconX onclick={(e) => deleteImg(e, img)} class="cursor-pointer"/>

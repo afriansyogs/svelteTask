@@ -1,4 +1,5 @@
 <script>
+	import { fade } from 'svelte/transition';
   import { FileUpload } from '@skeletonlabs/skeleton-svelte';
   // Icons
   import IconDropzone from '@lucide/svelte/icons/image-plus';
@@ -41,7 +42,7 @@
 </script>
 
 <div class="w-full min-h-screen z-10 fixed inset-0 flex justify-center items-center bg-black/80">
-  <div class="w-50%">
+  <div transition:fade class="w-50%">
     <h1 class="text-orange-500 text-xl font-bold text-center">Add ToDo</h1>
     <form action="" class="bg-neutral-900 border-2 border-orange-500 shadow-2xl rounded-md space-y-3 px-5 py-5">
       <div class="flex justify-end">

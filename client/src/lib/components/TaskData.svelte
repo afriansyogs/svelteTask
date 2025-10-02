@@ -1,4 +1,5 @@
 <script>
+	import { fly } from 'svelte/transition';
   import IconSquarePen from '@lucide/svelte/icons/square-pen';
   import IconEye from '@lucide/svelte/icons/eye';
   import IconTrash2 from '@lucide/svelte/icons/trash-2';
@@ -9,7 +10,7 @@
 </script>
 
 <div class="w-[95%] mx-auto mt-8 rounded-lg">
-  <div class="flex flex-col md:flex-row gap-6 items-start">
+  <div transition:fly={{ y:20 }} class="flex flex-col md:flex-row gap-6 items-start">
     <!-- Pending -->
     <div class="flex-1 bg-[#2a2a2a] p-5 rounded-lg shadow-md border-l-4 border-red-500">
       <h2 class="text-xl font-bold text-red-400 mb-4">⏳ Pending</h2>
