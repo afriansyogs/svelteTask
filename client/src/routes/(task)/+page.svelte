@@ -14,6 +14,7 @@
   import TaskData from "$lib/components/TaskData.svelte";
   import IconPlus from '@lucide/svelte/icons/plus';
 
+  const token = localStorage.getItem("token");
   let taskItem = $state([]);
   let userItem = $state([]);
   let isLoading = $state(false);
@@ -23,30 +24,8 @@
   let selectedFiles = $state([]);
   let username = $state("");
 
-  const token = localStorage.getItem("token");
-  // console.log(token)
-
   function toogleFormNewTask() {
     formAdd = !formAdd;
-  }
-
-  async function handleAddAvatar() {
-    const formData = new FormData();
-    formData.append("userImg", selectedFiles[0]);
-    console.log(`ini formdata: ${formData}`);
-
-    if (!formData) return;
-    const newImg = await updateImg(token, formData);
-    const response = await newImg.json();
-
-    if (newImg.status === 200) {
-      alertSuccess("success upload data");
-      userItem.userImg = response.newAvatar.userImg;
-      // await fetchUser()
-    } else {
-      alertError("failed");
-      console.log(response.error);
-    }
   }
 
   async function handleDeleteTask(e, id) {
@@ -63,15 +42,6 @@
     } catch (error) {
       console.log(error);
     }
-  }
-
-  async function handleUpdateTask(e) {
-    e.preventDefault();
-    try {
-      let formData = new FormData();
-      formData.append("title");
-      const updateTask = await updatedTask(formData);
-    } catch (error) {}
   }
 
   async function fetchUsername() {
@@ -106,24 +76,9 @@
     }
   }
 
-  async function fetchUser() {
-    try {
-      isLoading = true;
-      const userData = await getUserData(token);
-      const response = await userData.json();
-      userItem = response.userData;
-    } catch (error) {
-      console.log(error.message);
-      errorMessage = error;
-    } finally {
-      isLoading = false;
-    }
-  }
-
   onMount(async () => {
     await fetchUsername();
     await fetchTask();
-    // await fetchUser();
   });
 </script>
 

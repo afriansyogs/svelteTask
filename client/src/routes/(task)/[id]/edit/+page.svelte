@@ -16,7 +16,6 @@
 
   let token = localStorage.getItem('token')
   let {id} = page.params
-
   let task = $state({
     id: id,
     title: '',
@@ -26,23 +25,11 @@
     priority: '',
     status: '',
   })
-  $inspect(typeof task.taskImg)
   let imgEdit = $state([])
-  // let oldImg = $state([])
-
-  // let finalImg = $derived.by(() => {
-  //   let totalItemDelete = task.taskImg.length
-  //   let oldImgDelete = oldImg.slice(totalItemDelete)
-  //   let allImg = [...oldImgDelete, ...task.taskImg]
-  //   debugger
-  //   console.log(oldImg.length)
-  //   return allImg
-  // })
 
   function deleteImg(e, img) {
     e.preventDefault()
     task.taskImg = task.taskImg.filter((item) => item !== img)
-    console.log(task.taskImg)
   }
 
   function formatDateTimeLocal(date) {
@@ -145,7 +132,6 @@
           maxFiles={3}
           subtext="Attach up to 3 files."
           onFileChange={({acceptedFiles}) => {
-            // task.taskImg = acceptedFiles;
             imgEdit = acceptedFiles
             console.info(imgEdit)
             console.log(acceptedFiles)

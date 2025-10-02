@@ -7,8 +7,6 @@
 
   const token = localStorage.getItem("token");
   const { id } = page.params;
-  console.log(id);
-
   let detailData = $state({
     id: id,
     title: "",
