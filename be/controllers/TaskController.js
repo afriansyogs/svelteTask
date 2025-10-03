@@ -14,7 +14,7 @@ exports.taskData = async (req, res) => {
       return res.json({message: "Tidak ada data"})
     }
     console.log(`task nih ${task}`)
-    res.status(200).json({message: "success get task data", task})
+    res.status(200).json({message: "success get task data", data: task})
   } catch (error) {
     console.log(error.message)
     res.status(500).json({error: "failed get task data", details:error.message})
@@ -44,7 +44,7 @@ exports.newTask = async (req, res) => {
       }
     })
     console.log(`task nih ${newTask}`)
-    res.status(200).json({message: "success get newTask data", newTask})
+    res.status(200).json({message: "success get newTask data", data: newTask})
   } catch (error) {
     console.log(error.message)
     res.status(500).json({error: "failed add task", details:error.message})
@@ -61,7 +61,7 @@ exports.taskDetail = async (req, res) => {
 
     if (!task)return res.status(402).json({error: "task not found"})
 
-    res.status(200).json({message: "success task detail", task})
+    res.status(200).json({message: "success task detail", data: task})
   } catch (error) {
     res.status(500).json({error: "failed get task detail", details: error.message})
   }
@@ -102,7 +102,7 @@ exports.taskEdit = async (req, res) => {
       data: updateData
     })
     
-    res.status(200).json({message: "success update task", editTask})
+    res.status(200).json({message: "success update task", data: editTask})
   } catch (error) {
     res.status(500).json({error: "failed edit task", details: error.message})
   }
@@ -119,9 +119,8 @@ exports.taskDelete = async (req, res) => {
         id
       }
     })
-    res.status(200).json({message: "succes delete task", deleteTask})
+    res.status(200).json({message: "succes delete task", data: deleteTask})
   } catch (error) {
     res.status(500).json({error: "failed deleted task ", details: error.message})
   }
 }
-

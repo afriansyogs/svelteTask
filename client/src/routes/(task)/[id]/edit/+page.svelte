@@ -43,12 +43,12 @@
       let response = await taskDetail(token, id)
       let responseBody = await response.json()
       if (response.status === 200) {
-        task.title = responseBody.task.title
-        task.description = responseBody.task.description
-        task.taskImg = responseBody.task.taskImg
-        task.deadline = formatDateTimeLocal(responseBody.task.deadline)
-        task.priority = responseBody.task.priority
-        task.status = responseBody.task.status
+        task.title = responseBody.data.title
+        task.description = responseBody.data.description
+        task.taskImg = responseBody.data.taskImg
+        task.deadline = formatDateTimeLocal(responseBody.data.deadline)
+        task.priority = responseBody.data.priority
+        task.status = responseBody.data.status
       } else {
         await alertError(error.messages)
       }

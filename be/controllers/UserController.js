@@ -12,7 +12,7 @@ exports.getUsername = async (req, res) => {
         username: true
       }
     })
-    res.status(200).json({message: "success get username", userNameData})
+    res.status(200).json({message: "success get username", data: userNameData})
   } catch (error) {
     res.status(500).json({error: "failed Get Username", details: error.message})
   }
@@ -26,7 +26,7 @@ exports.getUserData = async (req, res) => {
         id: userId
       }
     })
-    res.status(200).json({message: "success get user data", userData})
+    res.status(200).json({message: "success get user data", data: userData})
   } catch (error) {
     res.status(500).json({error: "failed get user data", details: error.message})
   }
@@ -57,7 +57,7 @@ exports.updateUserData = async (req, res) => {
       },
       data: userData
     });
-    res.status(200).json({message: "succes upload file", update})
+    res.status(200).json({message: "succes upload file", data: update})
   } catch (error) {
     res.status(500).json({error: "failed upload file", details: error.message})
   }

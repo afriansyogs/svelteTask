@@ -49,7 +49,7 @@
       isLoading
       const fetchUsername = await getUsername(token);
       const response = await fetchUsername.json();
-      username = response.userNameData.username;
+      username = response.data.username;
     } catch (error) {
       console.log(error.message);
     } finally {
@@ -67,7 +67,7 @@
         return;
       }
       const response = await taskList.json();
-      taskItem = response.task;
+      taskItem = response.data;
     } catch (error) {
       console.log(error.message);
       errorMessage = error;

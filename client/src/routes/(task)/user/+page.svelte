@@ -25,7 +25,7 @@
       }
       
       const response = await fetchUserData.json();
-      userData = response.userData;
+      userData = response.data;
     } catch (error) {
       console.log(error.message);
       errorMessage = error;

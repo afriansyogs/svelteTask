@@ -22,7 +22,7 @@
       const detailTask = await taskDetail(token, id);
       const response = await detailTask.json();
       if (detailTask.status === 200) {
-        detailData = response.task;
+        detailData = response.data;
       } else {
         await alertError(detailTask.error);
       }
