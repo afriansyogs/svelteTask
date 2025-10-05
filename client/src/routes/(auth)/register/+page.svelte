@@ -2,6 +2,9 @@
   import { goto } from "$app/navigation";
   import { alertError, alertSuccess } from "$lib/alert";
   import { userRegister } from "$lib/api/AuthApi";
+  // icon 
+  import IconEye from '@lucide/svelte/icons/eye';
+  import IconEyeOff from '@lucide/svelte/icons/eye-off';
 
   let newUser = $state({
     username: '',
@@ -9,6 +12,8 @@
     password: '',
     passwordConfirm: ''
   })
+  let showPassword = $state(false)
+  let showPasswordConfirm = $state(false)
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -45,13 +50,31 @@
       </div>
       <div>
         <label for="password" class="block text-sm font-medium text-white">Password</label>
-        <input type="password" id="password" name="password" bind:value={newUser.password} placeholder="Masukkan password..."
-          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" required>
+        <div class="flex items-center mt-1 pe-2 border border-gray-300 rounded-md shadow-sm focus-within:ring-orange-500 focus-within:border-orange-500">
+          <input type={showPassword ? 'text' : 'password'} id="password" name="password" bind:value={newUser.password} placeholder="Masukkan password..."
+            class="mt-1  w-full px-4 py-2 outline-none bg-transparent" required>
+          <button type="button" onclick={() => showPassword = !showPassword} class="">
+            {#if showPassword}
+              <IconEye />
+            {:else}
+              <IconEyeOff />
+            {/if}
+          </button>
+        </div>
       </div>
       <div>
         <label for="passwordConfirm" class="block text-sm font-medium text-white">Konfirmasi Password</label>
-        <input type="password" id="passwordConfirm" name="passwordConfirm" bind:value={newUser.passwordConfirm} placeholder="Ulangi password..."
-          class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-orange-500 focus:border-orange-500" required>
+        <div class="flex items-center mt-1 pe-2 border border-gray-300 rounded-md shadow-sm focus-within:ring-orange-500 focus-within:border-orange-500">
+          <input type={showPasswordConfirm ? 'text' : 'password'} id="password" name="password" bind:value={newUser.passwordConfirm} placeholder="Ulangi password..."
+            class="mt-1  w-full px-4 py-2 outline-none bg-transparent" required>
+          <button type="button" onclick={() => showPasswordConfirm = !showPasswordConfirm} class="">
+            {#if showPasswordConfirm}
+              <IconEye />
+            {:else}
+              <IconEyeOff />
+            {/if}
+          </button>
+        </div>
       </div>
       <button type="submit" class="w-full bg-orange-600 text-white py-2 px-4 rounded-md hover:bg-orange-700 transition duration-200">
         Daftar
