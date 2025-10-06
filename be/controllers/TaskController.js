@@ -108,6 +108,25 @@ exports.taskEdit = async (req, res) => {
   }
 }
 
+exports.updateStatus = async (req, res) => {
+  try {
+    const {id, status} = req.body
+    
+    if (!taskId) return res.status(400).json({message: "fields required"})
+    const newStatus = await prisma.task.update({
+      where: {
+        id
+      },
+      data: {
+        status
+      }
+    })
+    res.status(200).json({message: "edit status success", data: newStatus})
+  } catch (error) {
+    res.status(500).json({error: "failed update status", details: error.message})
+  }
+}
+
 exports.taskDelete = async (req, res) => {
   try {
     const {id} = req.params;
