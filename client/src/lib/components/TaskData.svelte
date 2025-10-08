@@ -4,8 +4,36 @@
   import IconEye from '@lucide/svelte/icons/eye';
   import IconTrash2 from '@lucide/svelte/icons/trash-2';
   import { formatDateTimeLocal } from '$lib/utils/FormatDateTime';
+  import { draggable, droppable } from '@thisux/sveltednd';
+  import { alertError, alertSuccess } from '$lib/alert';
+  import { updatedStatus } from '$lib/api/TaskApi';
+  import { flip } from 'svelte/animate';
   
-  let { dataTask, handleDelete } = $props()
+  let { dataTask, handleDelete, fetchTask } = $props()
+
+  let token = localStorage.getItem('token')
+
+  async function handleDrop({sourceContainer, targetContainer, draggedItem}) {
+    console.log(`drag task ${draggedItem}`)
+    console.log(`sc task ${sourceContainer}`)
+    console.log(`trgt task ${targetContainer}`)
+    try {
+      if (sourceContainer != targetContainer) {
+        const newStatus = await updatedStatus(token, draggedItem.id, targetContainer)
+        const response = await newStatus.json()
+
+        if (newStatus.status == 200) {
+          alertSuccess(response.message)
+          await fetchTask()
+        } else {
+          alertError("error")
+        }
+      }
+    } catch (error) {
+      alertError(error)
+    }
+  }
+
   console.log(`nih data nih ${dataTask}`)
 </script>
 
@@ -14,8 +42,9 @@
     <!-- Pending -->
     <div class="flex-1 bg-[#2a2a2a] p-5 rounded-lg shadow-md border-l-4 border-red-500">
       <h2 class="text-xl font-bold text-red-400 mb-4">⏳ Pending</h2>
+      <div use:droppable={{ container:"PENDING", callbacks: {onDrop: handleDrop} }} class="min-h-60">
         {#each dataTask.filter(task => task.status === 'PENDING') as task (task.id)}
-          <div class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
+          <div use:draggable={{ container:"PENDING", dragData: task }} animate:flip={{ duration:300 }} class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
             {#if task.taskImg && task.taskImg.filter(img => img.trim() !== "").length > 0}
               <img src="http://localhost:3000/{task.taskImg[0]}" alt={task.title} class="w-full max-h-48 rounded-md object-cover">
             {/if}
@@ -45,13 +74,15 @@
             </div>
           </div>
         {/each}
+      </div>
     </div>
 
     <!-- In Progress -->
     <div class="flex-1 bg-[#2a2a2a] p-5 rounded-lg shadow-md border-l-4 border-yellow-500">
       <h2 class="text-xl font-bold text-yellow-400 mb-4">🚧 In Progress</h2>
+      <div use:droppable={{ container:"INPROGRESS", callbacks: {onDrop: handleDrop} }} class="min-h-60">
         {#each dataTask.filter(task => task.status === 'INPROGRESS') as task (task.id)}
-          <div class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
+          <div use:draggable={{ container:"INPROGRESS", dragData: task }} animate:flip={{ duration:300 }} class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
             {#if task.taskImg && task.taskImg.filter(img => img.trim() !== "").length > 0}
               <img src={`http://localhost:3000/${task.taskImg[0]}`} alt={task.title} class="w-full max-h-48 rounded-md object-cover">
             {/if}
@@ -81,13 +112,15 @@
             </div>
           </div>
         {/each}
+      </div>
     </div>
     
     <!-- Completed -->
     <div class="flex-1 bg-[#2a2a2a] p-5 rounded-lg shadow-md border-l-4 border-green-500">
       <h2 class="text-xl font-bold text-green-400 mb-4">✅ Completed</h2>
+      <div use:droppable={{ container:"COMPLETED", callbacks: {onDrop: handleDrop} }} class="min-h-60">
         {#each dataTask.filter(task => task.status === 'COMPLETED') as task (task.id)}
-          <div class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
+          <div use:draggable={{ container:"COMPLETED", dragData: task }} animate:flip={{ duration:300 }} class="bg-[#333] p-4 rounded-lg shadow mb-4 hover:bg-[#444] transition-all duration-300">
             {#if task.taskImg && task.taskImg.filter(img => img.trim() !== "").length > 0}
               <img src={`http://localhost:3000/${task.taskImg[0]}`} alt={task.title} class="w-full max-h-48 rounded-md object-cover">
             {/if}
@@ -117,6 +150,7 @@
             </div>
           </div>
         {/each}
+      </div>
     </div>
   </div>
 </div>

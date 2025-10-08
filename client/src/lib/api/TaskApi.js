@@ -48,6 +48,22 @@ export const updatedTask = async (token, id, formData) => {
   })
 }
 
+export const updatedStatus = async (token, id, status) => {
+  console.log(id)
+  return fetch(`${viteUrl}/editStatus/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-type': 'application/json',
+      'accept': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      id,
+      status
+    })
+  })
+}
+
 export const taskDelete = async (token, id) => {
   return fetch(`${viteUrl}/deleteTask/${id}`, {
     method: 'DELETE',

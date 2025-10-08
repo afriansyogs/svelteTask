@@ -108,7 +108,7 @@
   {:else if !isLoading && (!taskItem || taskItem.length === 0)}
     <p class="font-bold text-2xl text-center mt-10">Kamu belum membuat list task!</p>
   {:else}
-    <TaskData dataTask={taskItem} handleDelete={handleDeleteTask}/>
+    <TaskData dataTask={taskItem} handleDelete={handleDeleteTask} fetchTask={fetchTask}/>
   {/if}
 
   <div class="fixed bottom-10 right-8">
