@@ -112,7 +112,7 @@ exports.updateStatus = async (req, res) => {
   try {
     const {id, status} = req.body
     
-    if (!taskId) return res.status(400).json({message: "fields required"})
+    // if (!taskId) return res.status(400).json({message: "fields required"})
     const newStatus = await prisma.task.update({
       where: {
         id
