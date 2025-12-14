@@ -1,4 +1,5 @@
 <script>
+	import TaskStatusTab from './../../lib/components/TaskStatusTab.svelte';
   import { onMount } from "svelte";
   import {
     taskData,
@@ -90,11 +91,15 @@
       class="w-[23%] mx-auto"
     /> -->
     {#if username}
-      <h1 class="text-center font-bold text-5xl mt-10">
+      <h1 class="text-center font-bold text-3xl md:text-5xl mt-10">
         Halo, <span class="text-orange-400 font-extrabold">{username}</span>
       </h1>
-      <h1 class="text-center font-bold text-3xl mb-10">Yuk, List Tugasmu Hari ini!</h1>
+      <h1 class="text-center font-bold text-xl md:text-3xl mb-3 md:mb-10 mt-2 md:mt-0">Yuk, List Tugasmu Hari ini!</h1>
     {/if}
+  </div>
+
+  <div class="mt-5 ms-2 md:hidden">
+    <TaskStatusTab />
   </div>
 
   {#if formAdd}
