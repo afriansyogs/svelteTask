@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import TaskStatusTab from './../../lib/components/TaskStatusTab.svelte';
   import { onMount } from "svelte";
   import {
@@ -14,16 +14,15 @@
   import { alertError, alertSuccess } from "$lib/alert.js";
   import TaskData from "$lib/components/TaskData.svelte";
   import IconPlus from '@lucide/svelte/icons/plus';
+  import { token } from '$lib/state/token.svelte';
+  import type { Task } from '$lib/types/type';
 
-  const token = localStorage.getItem("token");
-  let taskItem = $state([]);
-  let userItem = $state([]);
-  let isLoading = $state(false);
-  let errorMessage = $state("");
-  let formAdd = $state(false);
-  let userImg = $state();
-  let selectedFiles = $state([]);
-  let username = $state("");
+  token.token = localStorage.getItem("token");
+  let taskItem = $state<Task[]>([]);
+  let isLoading = $state<boolean>(false);
+  let errorMessage = $state<string>("");
+  let formAdd = $state<boolean>(false);
+  let username = $state<string>("");
 
   function toogleFormNewTask() {
     formAdd = !formAdd;
@@ -32,7 +31,7 @@
   async function handleDeleteTask(e, id) {
     e.preventDefault();
     try {
-      const deleteTask = await taskDelete(token, id);
+      const deleteTask = await taskDelete(token.token, id);
       const response = await deleteTask.json();
       if (deleteTask.status === 200) {
         alertSuccess("success");
@@ -48,7 +47,7 @@
   async function fetchUsername() {
     try {
       isLoading
-      const fetchUsername = await getUsername(token);
+      const fetchUsername = await getUsername(token.token);
       const response = await fetchUsername.json();
       username = response.data.username;
     } catch (error) {
@@ -59,10 +58,10 @@
   }
 
   async function fetchTask() {
-    if (!token) return goto("/login");
+    if (!token.token) return goto("/login");
     try {
       isLoading = true;
-      const taskList = await taskData(token);
+      const taskList = await taskData(token.token);
       if (taskList.status === 401) {
         await goto('/login');
         return;

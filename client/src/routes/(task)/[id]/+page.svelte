@@ -1,13 +1,15 @@
-<script>
+<script lang="ts">
   import { formatDateTimeLocal } from "./../../../lib/utils/FormatDateTime.js";
   import { taskDetail } from "./../../../lib/api/TaskApi.js";
   import { page } from "$app/state";
   import { alertError } from "$lib/alert";
   import { onMount } from "svelte";
+  import type { TaskDetail } from "$lib/types/type.js";
+  import { token } from "$lib/state/token.svelte.js";
 
-  const token = localStorage.getItem("token");
+  token.token = localStorage.getItem("token");
   const { id } = page.params;
-  let detailData = $state({
+  let detailData = $state<TaskDetail>({
     id: id,
     title: "",
     description: "",
@@ -19,7 +21,7 @@
 
   async function fetchDetailTask() {
     try {
-      const detailTask = await taskDetail(token, id);
+      const detailTask = await taskDetail(token.token, id);
       const response = await detailTask.json();
       if (detailTask.status === 200) {
         detailData = response.data;

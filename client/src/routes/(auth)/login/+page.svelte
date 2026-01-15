@@ -1,17 +1,18 @@
-<script>
+<script lang="ts">
   import { goto } from "$app/navigation";
   import { alertError, alertSuccess } from "$lib/alert";
   import { userLogin } from "$lib/api/AuthApi";
+  import type { Login } from "$lib/types/type";
   // icon 
   import IconEye from '@lucide/svelte/icons/eye';
   import IconEyeOff from '@lucide/svelte/icons/eye-off';
 
 
-  let user = $state({
+  let user = $state(<Login>{
     email: '',
     password: ''
   })
-  let showPassword = $state(false)
+  let showPassword = $state<boolean>(false)
   $inspect(showPassword)
 
   async function handleSubmit(e) {

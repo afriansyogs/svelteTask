@@ -57,7 +57,7 @@
     <h1 class="text-orange-500 text-2xl font-extrabold text-center">Add ToDo</h1>
     <form action="" class="bg-neutral-900 border-2 border-orange-500 shadow-2xl rounded-md space-y-3 px-5 py-5">
       <div class="flex justify-end">
-        <button onclick={() => closeForm()} class="px-3 py-2 bg-orange-900 rounded-md">Close</button>
+        <button type="button" onclick={() => closeForm()} class="px-3 py-2 bg-orange-900 rounded-md">Close</button>
       </div>
       <label for="title" class="font-semibold">Title:</label>
       <input type="text" name="title" id="title" bind:value={newTask.title} class="w-full border-2 border-orange-900 rounded-md py-2" placeholder="Masukan Title..." required>
