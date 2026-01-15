@@ -11,21 +11,45 @@
   import { goto } from '$app/navigation';
 
   let isExpansed = $state(true);
+  let theme = $state(false)
+  $inspect(theme)
 
   function toggleExpanded() {
     isExpansed = !isExpansed;
+  }
+  
+  function toggleTheme() {
+    theme = !theme;
   }
 
   function handleLogOut() {
     localStorage.removeItem('token')
     goto('/login')
   }
+
+//   $effect(() => {
+//     const saved = localStorage.getItem('theme');
+//     if (saved === "light") {
+//       theme = true;
+//  oke   } else if (saved === "dark") {
+//       theme = false;
+//     } else {
+//       localStorage.setItem('theme', theme ? "light" : "dark");
+//     }
+//   })
+
+  $effect(() => {
+    localStorage.setItem('theme', theme ? "light" : "dark");
+  });
+
 </script>
 
 <Navigation.Rail expanded={isExpansed}>
   {#snippet header()}
     <Navigation.Tile labelExpanded="Menu" onclick={toggleExpanded} title="Toggle Menu Width"><IconMenu /></Navigation.Tile>
-    <!-- <SwitchMode/> -->
+    <button type="button" onclick={toggleTheme}>
+      <SwitchMode onclick={toggleTheme}/>
+    </button>
   {/snippet}
   {#snippet tiles()}
     <Navigation.Tile labelExpanded="Task" href="/">

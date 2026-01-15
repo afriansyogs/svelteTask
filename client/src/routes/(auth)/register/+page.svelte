@@ -1,19 +1,20 @@
-<script>
+<script lang="ts">
   import { goto } from "$app/navigation";
   import { alertError, alertSuccess } from "$lib/alert";
   import { userRegister } from "$lib/api/AuthApi";
+  import type { Register } from "$lib/types/type";
   // icon 
   import IconEye from '@lucide/svelte/icons/eye';
   import IconEyeOff from '@lucide/svelte/icons/eye-off';
 
-  let newUser = $state({
+  let newUser = $state<Register>({
     username: '',
     email: '',
     password: '',
     passwordConfirm: ''
   })
-  let showPassword = $state(false)
-  let showPasswordConfirm = $state(false)
+  let showPassword = $state<boolean>(false)
+  let showPasswordConfirm = $state<boolean>(false)
 
   async function handleSubmit(e) {
     e.preventDefault();

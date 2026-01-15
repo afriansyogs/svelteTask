@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { FileUpload } from '@skeletonlabs/skeleton-svelte';
   // Icons
   import IconDropzone from '@lucide/svelte/icons/image-plus';
@@ -13,10 +13,12 @@
   import { error } from "@sveltejs/kit";
   import { onMount } from "svelte";
   import { fly } from 'svelte/transition';
+  import type { Task, TaskDetail } from '$lib/types/type';
+  import { token } from '$lib/state/token.svelte';
 
-  let token = localStorage.getItem('token')
+  token.token = localStorage.getItem('token')
   let {id} = page.params
-  let task = $state({
+  let task = $state<TaskDetail>({
     id: id,
     title: '',
     description: '',
@@ -25,7 +27,7 @@
     priority: '',
     status: '',
   })
-  let imgEdit = $state([])
+  let imgEdit = $state<string[]>([])
 
   function deleteImg(e, img) {
     e.preventDefault()
@@ -40,7 +42,7 @@
 
   async function getTaskData() {
     try {
-      let response = await taskDetail(token, id)
+      let response = await taskDetail(token.token, id)
       let responseBody = await response.json()
       if (response.status === 200) {
         task.title = responseBody.data.title
@@ -73,7 +75,7 @@
       });
       
 
-      let update = await updatedTask(token, id, formData)
+      let update = await updatedTask(token.token, id, formData)
       let response = await update.json()
       
       if (update.status === 200) {

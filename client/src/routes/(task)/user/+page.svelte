@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import FormEditUserData from './../../../lib/components/FormEditUserData.svelte';
   import { getUserData } from "$lib/api/UserApi";
   import { onMount } from "svelte";
@@ -6,11 +6,14 @@
   import IconLogOut from '@lucide/svelte/icons/log-out';
   import IconUserRoundPen from '@lucide/svelte/icons/user-round-pen';
   import { goto } from '$app/navigation';
+  import { token } from '$lib/state/token.svelte';
+  import type { User } from '$lib/types/type';
 
-  let token = localStorage.getItem("token");
-  let userData = $state();
-  let errorMessage = $state("");
-  let formEdit = $state(false)
+  // let token = localStorage.getItem("token");
+  token.token = localStorage.getItem("token");
+  let userData = $state<User>();
+  let errorMessage = $state<string>("");
+  let formEdit = $state<boolean>(false)
 
   function handleFormEdit() {
     formEdit = !formEdit
