@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	// import { sidebarItems } from './../data/data.js';
   import { Navigation } from '@skeletonlabs/skeleton-svelte';
   import SwitchMode from './SwitchMode.svelte';
@@ -10,8 +10,8 @@
   import IconLogOut from '@lucide/svelte/icons/log-out';
   import { goto } from '$app/navigation';
 
-  let isExpansed = $state(true);
-  let theme = $state(false)
+  let isExpansed = $state<boolean>(true);
+  let theme = $state<boolean>(false)
   $inspect(theme)
 
   function toggleExpanded() {
@@ -27,17 +27,6 @@
     goto('/login')
   }
 
-//   $effect(() => {
-//     const saved = localStorage.getItem('theme');
-//     if (saved === "light") {
-//       theme = true;
-//  oke   } else if (saved === "dark") {
-//       theme = false;
-//     } else {
-//       localStorage.setItem('theme', theme ? "light" : "dark");
-//     }
-//   })
-
   $effect(() => {
     localStorage.setItem('theme', theme ? "light" : "dark");
   });
@@ -48,7 +37,7 @@
   {#snippet header()}
     <Navigation.Tile labelExpanded="Menu" onclick={toggleExpanded} title="Toggle Menu Width"><IconMenu /></Navigation.Tile>
     <button type="button" onclick={toggleTheme}>
-      <SwitchMode onclick={toggleTheme}/>
+      <SwitchMode/>
     </button>
   {/snippet}
   {#snippet tiles()}

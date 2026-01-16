@@ -1,7 +1,9 @@
-<script>
-  let status = $state("PENDING");
+<script lang="ts">
+  import type { StatusStyle } from "../types/type";
 
-  const statusStyle = {
+  let status = $state<string>("PENDING");
+
+  const statusStyle : StatusStyle = {
     PENDING: 'text-red-500 border-red-300',
     INPROGRESS: 'text-yellow-500 border-yellow-300',
     COMPLETED: 'text-green-500 border-green-300'

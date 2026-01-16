@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { formatDateTimeLocal } from "./../../../lib/utils/FormatDateTime.js";
-  import { taskDetail } from "./../../../lib/api/TaskApi.js";
+  import { taskDetail } from "@/lib/api/TaskApi";
   import { page } from "$app/state";
   import { alertError } from "$lib/alert";
   import { onMount } from "svelte";
-  import type { TaskDetail } from "$lib/types/type.js";
+  import type { Task } from "$lib/types/type.js";
   import { token } from "$lib/state/token.svelte.js";
+  import { formatDateTimeLocal } from "$lib/utils/FormatDateTime.js";
 
   token.token = localStorage.getItem("token");
   const { id } = page.params;
-  let detailData = $state<TaskDetail>({
-    id: id,
+  let detailData = $state<Task>({
+    id: id!,
     title: "",
     description: "",
     taskImg: [],

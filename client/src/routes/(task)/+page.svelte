@@ -5,11 +5,11 @@
     taskData,
     taskDelete,
     updatedTask,
-  } from "./../../lib/api/TaskApi.js";
+  } from "@/lib/api/TaskApi";
   import { goto } from "$app/navigation";
   import FormAddTask from "$lib/components/FormAddTask.svelte";
   import { fade, fly } from "svelte/transition";
-  import { getUserData, getUsername } from "$lib/api/UserApi.js";
+  import { getUsername } from "@/lib/api/UserApi";
   import { FileUpload } from "@skeletonlabs/skeleton-svelte";
   import { alertError, alertSuccess } from "$lib/alert.js";
   import TaskData from "$lib/components/TaskData.svelte";

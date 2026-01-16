@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+	import { token } from '$lib/state/token.svelte';
 	import { fade } from 'svelte/transition';
   import { FileUpload } from '@skeletonlabs/skeleton-svelte';
   // Icons
@@ -12,9 +13,9 @@
   import { updateUserData } from '$lib/api/UserApi';
 
   let { closeFormEdit, fetchUser, username, email, userImg } = $props()
-  let token = localStorage.getItem('token')
+  token.token = localStorage.getItem('token')
 
-  async function handleUpdateUser(e) {
+  async function handleUpdateUser(e : Event) {
     e.preventDefault();
     try {
       if(!username || !email)return alertError("Fields Required");
@@ -23,7 +24,7 @@
       formData.append('email', email)
       formData.append('userImg', userImg[0])
 
-      const updateUser = await updateUserData(token, formData)
+      const updateUser = await updateUserData(token.token!, formData)
       const response = await updateUser.json()
   
       if (updateUser.status === 200) {

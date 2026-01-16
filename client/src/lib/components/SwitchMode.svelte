@@ -1,14 +1,14 @@
-<script>
+<script lang="ts">
   import { Switch } from '@skeletonlabs/skeleton-svelte';
   // Icons
   import IconMoon from '@lucide/svelte/icons/moon';
   import IconSun from '@lucide/svelte/icons/sun';
 
   // Bind to the checked state
-  let mode = $state(false);
+  let mode = $state<boolean>(false);
 
   // Handle the change in state when toggled.
-  function handleModeChange(checked) {
+  function handleModeChange(checked : boolean) {
     // NOTE: implementation may differ per Tailwind config and framework:
     // https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually
     console.log({ mode });

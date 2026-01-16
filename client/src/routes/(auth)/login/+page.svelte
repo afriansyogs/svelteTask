@@ -15,7 +15,7 @@
   let showPassword = $state<boolean>(false)
   $inspect(showPassword)
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e : Event) {
     e.preventDefault();
     if(!user.email || !user.password) return alertError("fields required");
 
