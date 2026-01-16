@@ -13,9 +13,13 @@
 		"@skeletonlabs/skeleton": "^3.2.0",
 		"@skeletonlabs/skeleton-svelte": "^1.5.1",
 		"@sveltejs/adapter-auto": "^6.0.0",
-		"@sveltejs/kit": "^2.22.0",
+		"@sveltejs/kit": "^2.49.5",
 		"@sveltejs/vite-plugin-svelte": "^6.0.0",
+		"@types/node": "^25.0.9",
 		"svelte": "^5.0.0",
+		"svelte-check": "^4.3.5",
+		"tslib": "^2.8.1",
+		"typescript": "^5.9.3",
 		"vite": "^7.0.4"
 	},
 	"dependencies": {

@@ -13,12 +13,12 @@
   import { error } from "@sveltejs/kit";
   import { onMount } from "svelte";
   import { fly } from 'svelte/transition';
-  import type { Task, TaskDetail } from '$lib/types/type';
+  import type { Task } from '$lib/types/type';
   import { token } from '$lib/state/token.svelte';
 
   token.token = localStorage.getItem('token')
   let {id} = page.params
-  let task = $state<TaskDetail>({
+  let task = $state<Task>({
     id: id,
     title: '',
     description: '',

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import IconSquarePen from '@lucide/svelte/icons/square-pen';
   import IconEye from '@lucide/svelte/icons/eye';
   import IconTrash2 from '@lucide/svelte/icons/trash-2';

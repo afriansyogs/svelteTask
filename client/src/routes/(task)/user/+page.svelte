@@ -21,7 +21,7 @@
 
   async function fetchUser() {
     try {
-      const fetchUserData = await getUserData(token);
+      const fetchUserData = await getUserData(token.token!);
       if (fetchUserData.status === 401) {
         await goto('/login')
         return

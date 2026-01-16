@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+	import { token } from '$lib/state/token.svelte';
 	import { fade } from 'svelte/transition';
   import { FileUpload } from '@skeletonlabs/skeleton-svelte';
   // Icons
@@ -8,26 +9,27 @@
   import { submitTask } from '$lib/api/TaskApi';
   import { alertError, alertSuccess } from '$lib/alert';
   import { error } from '@sveltejs/kit';
+  import type { Task } from '../types/type';
 
   let { closeForm, fetchTask } = $props()
 
-  let token = localStorage.getItem('token')
-  let newTask = $state({
+  token.token = localStorage.getItem('token')
+  let newTask = $state<Omit<Task, 'id'>>({
     title: '',
     description: '',
     deadline: '',
     priority: 'MEDIUM',
     status: 'PENDING',
   })
-  let taskImg = $state([])
+  let taskImg = $state<string[]>([])
 
-  async function handleSubmitNewTask(e) {
+  async function handleSubmitNewTask(e : Event) {
     e.preventDefault();
     try {
       if(!newTask.title || !newTask.deadline || !newTask.priority || !newTask.status)return alertError("Fields Required");
       const formData = new FormData();
       formData.append('title', newTask.title)
-      formData.append('description', newTask.description)
+      formData.append('description', newTask.description ?? '')
       formData.append('deadline', newTask.deadline)
       formData.append('priority', newTask.priority)
       formData.append('status', newTask.status)
@@ -35,7 +37,7 @@
         formData.append('taskImg', item)
       })
   
-      const addTask = await submitTask(token, formData)
+      const addTask = await submitTask(token.token!, formData)
       const response = await addTask.json()
   
       if (addTask.status === 200) {

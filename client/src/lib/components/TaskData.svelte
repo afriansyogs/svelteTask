@@ -1,4 +1,5 @@
-<script>
+<script lang="ts">
+	import { token } from '$lib/state/token.svelte';
 	import ButtonAction from './ButtonAction.svelte';
 	import { fly } from 'svelte/transition';
   import IconSquarePen from '@lucide/svelte/icons/square-pen';
@@ -9,18 +10,19 @@
   import { alertError, alertSuccess } from '$lib/alert';
   import { updatedStatus } from '$lib/api/TaskApi';
   import { flip } from 'svelte/animate';
+  import type { DropEvent } from '../types/type';
   
   let { dataTask, handleDelete, fetchTask } = $props()
 
-  let token = localStorage.getItem('token')
+  token.token = localStorage.getItem('token')
 
-  async function handleDrop({sourceContainer, targetContainer, draggedItem}) {
+  async function handleDrop({sourceContainer, targetContainer, draggedItem} : DropEvent ) {
     console.log(`drag task ${draggedItem}`)
     console.log(`sc task ${sourceContainer}`)
     console.log(`trgt task ${targetContainer}`)
     try {
       if (sourceContainer != targetContainer) {
-        const newStatus = await updatedStatus(token, draggedItem.id, targetContainer)
+        const newStatus = await updatedStatus(token.token!, draggedItem.id, targetContainer)
         const response = await newStatus.json()
 
         if (newStatus.status == 200) {

@@ -1,3 +1,8 @@
+import type { Component, ComponentIcon } from "@lucide/svelte";
+import type { SvelteComponentTyped } from 'svelte';
+import type { IconProps } from '@lucide/svelte';
+import type { ComponentType } from 'svelte';
+
 export type Token = {
   token: string | null;
 }
@@ -24,27 +29,29 @@ export interface User {
 }
 
 export interface Task {
-  id: string;              
-  userId: string;          
+  id: string;                    
   title: string;           
-  description?: string;    
+  description?: string | undefined;    
   taskImg?: string[];           
   deadline: string;       
-  priority: Priority;      
-  status: TaskStatus;      
+  priority: Priority | string;      
+  status: TaskStatus | string;      
   createdAt?: string;      
   updatedAt?: string;      
 }
 
-export interface TaskDetail {
-  id: string;
-  title: string;
-  description: string;
-  taskImg: string[];
-  deadline: string;
-  priority: Priority | "";
-  status: TaskStatus | "";
+export interface DropEvent {
+  sourceContainer: TaskStatus; 
+  targetContainer: TaskStatus; 
+  draggedItem: Task;
 }
+
+export interface StatusStyle {
+  PENDING : string
+  INPROGRESS : string
+  COMPLETED : string
+}
+
 
 export enum Role {
   USER = "USER",
@@ -63,3 +70,9 @@ export enum Priority {
   HIGH = "HIGH"
 }
 
+export interface SidebarItem {
+  name: string
+  label: string
+  href: string
+  icon: typeof Component<IconProps>
+}
