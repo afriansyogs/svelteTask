@@ -28,8 +28,8 @@ Aplikasi **Task Management**  untuk mengelola tugas harian dengan tampilan yang 
 
 ```
 task-management/
-├── frontend/
-├── backend/
+├── client/
+├── be/
 └── README.md
 ```
 
@@ -39,13 +39,13 @@ task-management/
 
 ```bash
 git clone https://github.com/afriansyogs/svelteTask.git
-cd task-management
+cd svelteTask
 ```
 
 ### 2. Menjalankan Backend
 
 ```bash
-cd backend
+cd be
 npm install
 npm run dev
 ```
@@ -53,7 +53,7 @@ npm run dev
 ### 3. Menjalankan Frontend
 
 ```bash
-cd frontend
+cd client
 npm install
 npm run dev
 ```
