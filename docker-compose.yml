@@ -1,0 +1,56 @@
+version: "3.9"
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: db-task-managemant
+    restart: always
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - app_network
+
+  backend:
+    build: ./be
+    container_name: express-task-managemant
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      - DATABASE_URL=mysql://${MYSQL_USER}:${MYSQL_PASSWORD}@mysql:3306/${MYSQL_DATABASE}
+    volumes:
+      - ./be:/app         
+      - /app/node_modules
+      - ./be/uploads:/app/uploads
+    depends_on:
+      - mysql
+    networks:
+      - app_network
+    command: >
+      sh -c "npx prisma generate && npx prisma db push --accept-data-loss && npm run dev"
+
+  frontend:
+    build: ./client
+    container_name: sveltekit-task-managemant
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    networks:
+      - app_network
+
+volumes:
+  mysql_data:
+
+networks:
+  app_network:
+    driver: bridge
