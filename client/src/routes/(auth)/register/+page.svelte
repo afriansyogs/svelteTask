@@ -66,7 +66,7 @@
       <div>
         <label for="passwordConfirm" class="block text-sm font-medium text-white">Konfirmasi Password</label>
         <div class="flex items-center mt-1 pe-2 border border-gray-300 rounded-md shadow-sm focus-within:ring-orange-500 focus-within:border-orange-500">
-          <input type={showPasswordConfirm ? 'text' : 'password'} id="password" name="password" bind:value={newUser.passwordConfirm} placeholder="Ulangi password..."
+          <input type={showPasswordConfirm ? 'text' : 'password'} id="passwordConfirm" name="passwordConfirm" bind:value={newUser.passwordConfirm} placeholder="Ulangi password..."
             class="mt-1  w-full px-4 py-2 outline-none bg-transparent" required>
           <button type="button" onclick={() => showPasswordConfirm = !showPasswordConfirm} class="">
             {#if showPasswordConfirm}
