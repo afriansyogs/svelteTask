@@ -52,7 +52,6 @@ export interface StatusStyle {
   COMPLETED : string
 }
 
-
 export enum Role {
   USER = "USER",
   ADMIN = "ADMIN"

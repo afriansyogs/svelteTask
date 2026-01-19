@@ -7,7 +7,7 @@
   import IconTrash2 from '@lucide/svelte/icons/trash-2';
   import { formatDateTimeLocal } from '$lib/utils/FormatDateTime';
   import { draggable, droppable } from '@thisux/sveltednd';
-  import { alertError, alertSuccess } from '$lib/alert';
+  import { alertError, alertSuccess } from '@/lib/alert';
   import { updatedStatus } from '$lib/api/TaskApi';
   import { flip } from 'svelte/animate';
   import type { DropEvent } from '../types/type';

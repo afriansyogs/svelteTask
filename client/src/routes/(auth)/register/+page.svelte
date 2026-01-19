@@ -1,6 +1,6 @@
 <script lang="ts">
   import { goto } from "$app/navigation";
-  import { alertError, alertSuccess } from "$lib/alert";
+  import { alertError, alertSuccess } from "@/lib/alert";
   import { userRegister } from "$lib/api/AuthApi";
   import type { Register } from "$lib/types/type";
   // icon 

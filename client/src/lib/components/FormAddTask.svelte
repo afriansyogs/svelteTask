@@ -7,7 +7,7 @@
   import IconFile from '@lucide/svelte/icons/paperclip';
   import IconRemove from '@lucide/svelte/icons/circle-x';
   import { submitTask } from '$lib/api/TaskApi';
-  import { alertError, alertSuccess } from '$lib/alert';
+  import { alertError, alertSuccess } from '@/lib/alert';
   import { error } from '@sveltejs/kit';
   import type { Task } from '../types/type';
 
@@ -45,7 +45,7 @@
         closeForm()
         await fetchTask()
       } else {
-        alertError(error.message)
+        if(error instanceof Error) alertError(error.message)
       }
       console.log(response)
     } catch (error) {

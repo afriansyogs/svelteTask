@@ -11,7 +11,7 @@
   import { fade, fly } from "svelte/transition";
   import { getUsername } from "@/lib/api/UserApi";
   import { FileUpload } from "@skeletonlabs/skeleton-svelte";
-  import { alertError, alertSuccess } from "$lib/alert.js";
+  import { alertError, alertSuccess } from "@/lib/alert.js";
   import TaskData from "$lib/components/TaskData.svelte";
   import IconPlus from '@lucide/svelte/icons/plus';
   import { token } from '$lib/state/token.svelte';
@@ -28,10 +28,10 @@
     formAdd = !formAdd;
   }
 
-  async function handleDeleteTask(e, id) {
+  async function handleDeleteTask(e : Event, id : string) {
     e.preventDefault();
     try {
-      const deleteTask = await taskDelete(token.token, id);
+      const deleteTask = await taskDelete(token.token!, id);
       const response = await deleteTask.json();
       if (deleteTask.status === 200) {
         alertSuccess("success");
@@ -47,11 +47,15 @@
   async function fetchUsername() {
     try {
       isLoading
-      const fetchUsername = await getUsername(token.token);
+      const fetchUsername = await getUsername(token.token!);
       const response = await fetchUsername.json();
       username = response.data.username;
     } catch (error) {
-      console.log(error.message);
+      if (error instanceof Error) {
+        errorMessage = error.message; 
+      } else {
+        errorMessage = "Gagal Fetch username";
+      }
     } finally {
       isLoading = false
     }
@@ -69,8 +73,11 @@
       const response = await taskList.json();
       taskItem = response.data;
     } catch (error) {
-      console.log(error.message);
-      errorMessage = error;
+      if (error instanceof Error) {
+        errorMessage = error.message; 
+      } else {
+        errorMessage = "Gagal fetch task";
+      }
     } finally {
       isLoading = false;
     }
