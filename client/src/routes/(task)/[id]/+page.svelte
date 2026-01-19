@@ -1,7 +1,7 @@
 <script lang="ts">
   import { taskDetail } from "@/lib/api/TaskApi";
   import { page } from "$app/state";
-  import { alertError } from "$lib/alert";
+  import { alertError } from "@/lib/alert";
   import { onMount } from "svelte";
   import type { Task } from "$lib/types/type.js";
   import { token } from "$lib/state/token.svelte.js";

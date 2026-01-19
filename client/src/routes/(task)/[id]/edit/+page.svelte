@@ -8,7 +8,7 @@
 
   import { goto } from "$app/navigation";
   import { page } from "$app/state";
-  import { alertError, alertSuccess } from "$lib/alert";
+  import { alertError, alertSuccess } from "@/lib/alert";
   import { taskDetail, updatedTask } from "$lib/api/TaskApi";
   import { error } from "@sveltejs/kit";
   import { onMount } from "svelte";
