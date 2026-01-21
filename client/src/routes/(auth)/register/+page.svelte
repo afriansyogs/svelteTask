@@ -16,22 +16,26 @@
   let showPassword = $state<boolean>(false)
   let showPasswordConfirm = $state<boolean>(false)
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e : Event) {
     e.preventDefault();
-    if (newUser.password !== newUser.passwordConfirm) {
-      alertError("Password tidak sama")
-      return
-    }
-    
-    const response = await userRegister(newUser);
-    const responseData = await response.json();
-    console.log(responseData);
-
-    if (response.status === 200) {
-      await alertSuccess(responseData.message);
-      goto('/login');
-    } else {
-      await alertError(responseData.error);
+    try {
+      if (newUser.password !== newUser.passwordConfirm) {
+        await alertError("Password tidak sama")
+        return
+      }
+      
+      const response = await userRegister(newUser);
+      const responseData = await response.json();
+      console.log(responseData);
+  
+      if (response.status === 200) {
+        await alertSuccess(responseData.message);
+        goto('/login');
+      } else {
+        await alertError(responseData.error);
+      }
+    } catch (error) {
+      if(error instanceof Error) return await alertError(error.message)
     }
   }
 </script>

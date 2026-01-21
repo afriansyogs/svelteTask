@@ -4,7 +4,6 @@ services:
   mysql:
     image: mysql:8.0
     container_name: db-task-managemant
-    restart: always
     env_file:
       - .env
     ports:
@@ -17,7 +16,6 @@ services:
   backend:
     build: ./be
     container_name: express-task-managemant
-    restart: on-failure
     ports:
       - "3000:3000"
     env_file:

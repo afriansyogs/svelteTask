@@ -21,12 +21,12 @@
 
   async function fetchDetailTask() {
     try {
-      const detailTask = await taskDetail(token.token, id);
+      const detailTask = await taskDetail(token.token!, id);
       const response = await detailTask.json();
       if (detailTask.status === 200) {
         detailData = response.data;
       } else {
-        await alertError(detailTask.error);
+        await alertError(response.error);
       }
     } catch (error) {
       console.log(error);

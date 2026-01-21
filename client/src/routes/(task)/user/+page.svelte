@@ -8,6 +8,7 @@
   import { goto } from '$app/navigation';
   import { token } from '$lib/state/token.svelte';
   import type { User } from '$lib/types/type';
+  import { alertError } from '@/lib/alert';
 
   // let token = localStorage.getItem("token");
   token.token = localStorage.getItem("token");
@@ -30,8 +31,11 @@
       const response = await fetchUserData.json();
       userData = response.data;
     } catch (error) {
-      console.log(error.message);
-      errorMessage = error;
+      if(error instanceof Error){ 
+      await alertError(error.message)
+      errorMessage = error.message;
+        return
+      }
     }
   }
 

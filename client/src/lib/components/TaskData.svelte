@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { error } from '@sveltejs/kit';
 	import { token } from '$lib/state/token.svelte';
 	import ButtonAction from './ButtonAction.svelte';
 	import { fly } from 'svelte/transition';
@@ -26,14 +27,14 @@
         const response = await newStatus.json()
 
         if (newStatus.status == 200) {
-          alertSuccess(response.message)
+          await alertSuccess(response.message)
           await fetchTask()
         } else {
-          alertError("error")
+          await alertError(response.error)
         }
       }
     } catch (error) {
-      alertError(error)
+      if(error instanceof Error) return await alertError(error.message)
     }
   }
 

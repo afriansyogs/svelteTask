@@ -17,17 +17,21 @@
 
   async function handleSubmit(e : Event) {
     e.preventDefault();
-    if(!user.email || !user.password) return alertError("fields required");
-
-    const loginUser = await userLogin(user);
-    const response = await loginUser.json()
-
-    if (loginUser.status === 200) {
-      alertSuccess(response.message)
-      localStorage.setItem('token', response.token)
-      goto('/')
-    } else {
-      alertError(response.error)
+    try {
+      if(!user.email || !user.password) return await alertError("fields required");
+  
+      const loginUser = await userLogin(user);
+      const response = await loginUser.json()
+  
+      if (loginUser.status === 200) {
+        await alertSuccess(response.message)
+        localStorage.setItem('token', response.token)
+        goto('/')
+      } else {
+        await alertError(response.error)
+      }
+    } catch (error) {
+      if(error instanceof Error) return await alertError(error.message)
     }
   }
 </script>
