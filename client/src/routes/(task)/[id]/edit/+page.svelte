@@ -29,12 +29,12 @@
   })
   let imgEdit = $state<string[]>([])
 
-  function deleteImg(e, img) {
+  function deleteImg(e : Event, img : string) {
     e.preventDefault()
     task.taskImg = task.taskImg.filter((item) => item !== img)
   }
 
-  function formatDateTimeLocal(date) {
+  function formatDateTimeLocal(date : string) {
     const dateTime = new Date(date)
     const local = new Date(dateTime.getTime() - dateTime.getTimezoneOffset() * 60000);
     return local.toISOString().slice(0, 16);
@@ -42,7 +42,7 @@
 
   async function getTaskData() {
     try {
-      let response = await taskDetail(token.token, id)
+      let response = await taskDetail(token.token!, id)
       let responseBody = await response.json()
       if (response.status === 200) {
         task.title = responseBody.data.title
@@ -52,7 +52,7 @@
         task.priority = responseBody.data.priority
         task.status = responseBody.data.status
       } else {
-        await alertError(error.messages)
+        await alertError(responseBody.messages)
       }
       console.log(task)
     } catch (error) {
@@ -60,7 +60,7 @@
     }
   }
 
-  async function handleUpdate(e) {
+  async function handleUpdate(e : Event) {
     e.preventDefault();
     try {
       let formData = new FormData()
@@ -75,17 +75,17 @@
       });
       
 
-      let update = await updatedTask(token.token, id, formData)
+      let update = await updatedTask(token.token!, id!, formData)
       let response = await update.json()
       
       if (update.status === 200) {
         alertSuccess("success update Data")
         goto('/')
       } else {
-        await alertError(error.messages)
+        await alertError(response.messages)
       }
     } catch (error) {
-      alertError(error.messages)
+      if(error instanceof Error) return await alertError(error.message)
       console.log(error)
     }
   }
