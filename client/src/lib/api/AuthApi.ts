@@ -27,6 +27,7 @@ export const userLogin = async ({email, password} : Login) : Promise<Response> =
     body: JSON.stringify({
       email,
       password
-    })
+    }),
+    credentials: 'include'
   })
 }

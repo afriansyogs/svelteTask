@@ -15,7 +15,7 @@
   
   let { dataTask, handleDelete, fetchTask } = $props()
 
-  token.token = localStorage.getItem('token')
+  // token.token = localStorage.getItem('token')
 
   async function handleDrop({sourceContainer, targetContainer, draggedItem} : DropEvent ) {
     console.log(`drag task ${draggedItem}`)
@@ -23,7 +23,7 @@
     console.log(`trgt task ${targetContainer}`)
     try {
       if (sourceContainer != targetContainer) {
-        const newStatus = await updatedStatus(token.token!, draggedItem.id, targetContainer)
+        const newStatus = await updatedStatus(draggedItem.id, targetContainer)
         const response = await newStatus.json()
 
         if (newStatus.status == 200) {

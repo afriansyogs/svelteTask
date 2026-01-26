@@ -22,9 +22,12 @@
     theme = !theme;
   }
 
-  function handleLogOut() {
-    localStorage.removeItem('token')
-    goto('/login')
+  async function handleLogOut() {
+    const logout = await fetch('http://localhost:3000/auth/logout', {
+      method: 'POST',
+      credentials: 'include'
+    })
+    if(logout.status === 200) goto('/login')
   }
 
   $effect(() => {

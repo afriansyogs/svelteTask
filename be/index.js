@@ -1,24 +1,26 @@
-const express = require('express')
-const port = 3000
-const { PrismaClient } = require('@prisma/client')
-const prisma = new PrismaClient()
-// const bodyParser = require('body-parser');
-const cors = require('cors');
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
+import { PrismaClient } from "@prisma/client";
 
+import authRoutes from './routes/auth.js';
+import taskRoutes from './routes/task.js';
+import userRoutes from './routes/user.js';
+
+// const bodyParser = require('body-parser');
+const prisma = new PrismaClient();
+const port = 3000
 const app = express();
 
+app.use(cookieParser());
 app.use(cors({
-  origin: 'http://localhost:5173',
-  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+  origin: 'http://localhost:5173', 
   credentials: true
 }));
 
 app.use(express.json())
 app.use('/uploads', express.static('uploads'));
 
-const authRoutes = require('./routes/auth')
-const userRoutes = require('./routes/user')
-const taskRoutes = require('./routes/task')
 
 app.use((req, res, next) => {
   req.prisma = prisma;

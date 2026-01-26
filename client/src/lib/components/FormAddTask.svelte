@@ -13,7 +13,7 @@
 
   let { closeForm, fetchTask } = $props()
 
-  token.token = localStorage.getItem('token')
+  // token.token = localStorage.getItem('token')
   let newTask = $state<Omit<Task, 'id'>>({
     title: '',
     description: '',
@@ -37,7 +37,7 @@
         formData.append('taskImg', item)
       })
   
-      const addTask = await submitTask(token.token!, formData)
+      const addTask = await submitTask(formData)
       const response = await addTask.json()
   
       if (addTask.status === 200) {

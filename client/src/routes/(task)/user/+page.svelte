@@ -11,7 +11,7 @@
   import { alertError } from '@/lib/alert';
 
   // let token = localStorage.getItem("token");
-  token.token = localStorage.getItem("token");
+  // token.token = localStorage.getItem("token");
   let userData = $state<User>();
   let errorMessage = $state<string>("");
   let formEdit = $state<boolean>(false)
@@ -22,7 +22,7 @@
 
   async function fetchUser() {
     try {
-      const fetchUserData = await getUserData(token.token!);
+      const fetchUserData = await getUserData();
       if (fetchUserData.status === 401) {
         await goto('/login')
         return

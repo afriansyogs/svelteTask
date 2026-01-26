@@ -1,7 +1,9 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
 const prisma = new PrismaClient();
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+
 
 const signToken = id => {
   return jwt.sign({id}, process.env.JWT_SECRET, {
@@ -9,7 +11,7 @@ const signToken = id => {
   })
 }
 
-exports.register = async (req, res) => {
+export const register = async (req, res) => {
   const {username, email, password} = req.body;
   
   if (!username || !email || !password) {
@@ -33,7 +35,7 @@ exports.register = async (req, res) => {
   }
 }
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   const {email, password} = req.body;
   if (!email || !password) {
     return res.status(500).json({error: "fields required"})
@@ -51,10 +53,27 @@ exports.login = async (req, res) => {
     }
 
     const token = signToken(user.id)
+    res.cookie('token', token, {
+      httpOnly: true,
+      sameSite: 'lax',
+      maxAge: 24 * 60 * 60 * 1000
+    })
     console.log(`token jadi nih ${token}`)
     res.status(200).json({message: "login success", token})
   } catch (error) {
     console.log(error.message)
     res.status(500).json({error: "Login Failed", details: error.message})
+  }
+}
+
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie('token', {
+      httpOnly: true,
+      sameSite: 'lax'
+    });
+    res.status(200).json({ message: 'Logout success' });
+  } catch (error) {
+    res.status(500).json({error: "Logout Failed", details: error.message})
   }
 }

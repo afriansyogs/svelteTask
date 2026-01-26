@@ -7,7 +7,7 @@
   import { token } from "$lib/state/token.svelte.js";
   import { formatDateTimeLocal } from "$lib/utils/FormatDateTime.js";
 
-  token.token = localStorage.getItem("token");
+  // token.token = localStorage.getItem("token");
   const { id } = page.params;
   let detailData = $state<Task>({
     id: id!,
@@ -21,7 +21,7 @@
 
   async function fetchDetailTask() {
     try {
-      const detailTask = await taskDetail(token.token!, id);
+      const detailTask = await taskDetail(id!);
       const response = await detailTask.json();
       if (detailTask.status === 200) {
         detailData = response.data;
