@@ -16,10 +16,10 @@
   import type { Task } from '$lib/types/type';
   import { token } from '$lib/state/token.svelte';
 
-  token.token = localStorage.getItem('token')
+  // token.token = localStorage.getItem('token')
   let {id} = page.params
   let task = $state<Task>({
-    id: id,
+    id: id!,
     title: '',
     description: '',
     taskImg: [],
@@ -42,7 +42,7 @@
 
   async function getTaskData() {
     try {
-      let response = await taskDetail(token.token!, id)
+      let response = await taskDetail(id!)
       let responseBody = await response.json()
       if (response.status === 200) {
         task.title = responseBody.data.title
@@ -75,7 +75,7 @@
       });
       
 
-      let update = await updatedTask(token.token!, id!, formData)
+      let update = await updatedTask(id!, formData)
       let response = await update.json()
       
       if (update.status === 200) {

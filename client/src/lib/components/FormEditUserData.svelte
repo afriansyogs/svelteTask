@@ -13,7 +13,7 @@
   import { updateUserData } from '$lib/api/UserApi';
 
   let { closeFormEdit, fetchUser, username, email, userImg } = $props()
-  token.token = localStorage.getItem('token')
+  // token.token = localStorage.getItem('token')
 
   async function handleUpdateUser(e : Event) {
     e.preventDefault();
@@ -24,7 +24,7 @@
       formData.append('email', email)
       formData.append('userImg', userImg[0])
 
-      const updateUser = await updateUserData(token.token!, formData)
+      const updateUser = await updateUserData(formData)
       const response = await updateUser.json()
   
       if (updateUser.status === 200) {

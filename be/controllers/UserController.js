@@ -1,7 +1,7 @@
-const { PrismaClient } = require('@prisma/client');
+import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
-exports.getUsername = async (req, res) => {
+export const getUsername = async (req, res) => {
   try {
     const userId = req.user.id
     const userNameData = await prisma.user.findUnique({
@@ -18,7 +18,7 @@ exports.getUsername = async (req, res) => {
   }
 }
 
-exports.getUserData = async (req, res) => {
+export const getUserData = async (req, res) => {
   try {
     const userId = req.user.id
     const userData = await prisma.user.findUnique({
@@ -32,7 +32,7 @@ exports.getUserData = async (req, res) => {
   }
 }
 
-exports.updateUserData = async (req, res) => {
+export const updateUserData = async (req, res) => {
   try {
     const userId = req.user.id
     const {username, email} = req.body

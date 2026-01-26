@@ -1,9 +1,11 @@
-const { PrismaClient } = require('@prisma/client');
-const prisma = new PrismaClient();
-const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+import { PrismaClient } from "@prisma/client";
+import multer from "multer";
 
-exports.taskData = async (req, res) => {
+const prisma = new PrismaClient();
+const upload = multer({ dest: "uploads/" });
+
+
+export const taskData = async (req, res) => {
   try {
     const userId = req.user.id;
     const task = await prisma.task.findMany({
@@ -21,7 +23,7 @@ exports.taskData = async (req, res) => {
   }
 }
 
-exports.newTask = async (req, res) => {
+export const newTask = async (req, res) => {
   try {
     const userId = req.user.id;
     const {title, description, deadline, priority, status } = req.body
@@ -51,7 +53,7 @@ exports.newTask = async (req, res) => {
   }
 }
 
-exports.taskDetail = async (req, res) => {
+export const taskDetail = async (req, res) => {
   try {
     const {id} = req.params
     if (!id)return res.status(401).json({message: "no task selected"})
@@ -67,7 +69,7 @@ exports.taskDetail = async (req, res) => {
   }
 }
 
-exports.taskEdit = async (req, res) => {
+export const taskEdit = async (req, res) => {
   try {
     const userId = req.user.id;
     const {id} = req.params
@@ -108,7 +110,7 @@ exports.taskEdit = async (req, res) => {
   }
 }
 
-exports.updateStatus = async (req, res) => {
+export const updateStatus = async (req, res) => {
   try {
     const {id, status} = req.body
     
@@ -127,7 +129,7 @@ exports.updateStatus = async (req, res) => {
   }
 }
 
-exports.taskDelete = async (req, res) => {
+export const taskDelete = async (req, res) => {
   try {
     const {id} = req.params;
     console.log(id)

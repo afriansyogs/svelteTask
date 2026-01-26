@@ -17,7 +17,8 @@
   import { token } from '$lib/state/token.svelte';
   import type { Task } from '$lib/types/type';
 
-  token.token = localStorage.getItem("token");
+  // token.token = localStorage.getItem("token");
+  // console.log(token.token)
   let taskItem = $state<Task[]>([]);
   let isLoading = $state<boolean>(false);
   let errorMessage = $state<string>("");
@@ -31,7 +32,7 @@
   async function handleDeleteTask(e : Event, id : string) {
     e.preventDefault();
     try {
-      const deleteTask = await taskDelete(token.token!, id);
+      const deleteTask = await taskDelete(id);
       const response = await deleteTask.json();
       if (deleteTask.status === 200) {
         alertSuccess("success");
@@ -47,7 +48,7 @@
   async function fetchUsername() {
     try {
       isLoading
-      const fetchUsername = await getUsername(token.token!);
+      const fetchUsername = await getUsername();
       const response = await fetchUsername.json();
       username = response.data.username;
     } catch (error) {
@@ -62,10 +63,10 @@
   }
 
   async function fetchTask() {
-    if (!token.token) return goto("/login");
+    // if (!token.token) return goto("/login");
     try {
       isLoading = true;
-      const taskList = await taskData(token.token);
+      const taskList = await taskData();
       if (taskList.status === 401) {
         await goto('/login');
         return;

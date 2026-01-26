@@ -31,7 +31,7 @@ services:
     networks:
       - app_network
     command: >
-      sh -c "npx prisma generate && npx prisma db push --accept-data-loss && npm run dev"
+      sh -c "npm install && npx prisma generate && npx prisma db push --accept-data-loss && npm run dev"
 
   frontend:
     build: ./client
