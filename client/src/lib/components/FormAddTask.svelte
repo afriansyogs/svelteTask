@@ -13,7 +13,6 @@
 
   let { closeForm, fetchTask } = $props()
 
-  // token.token = localStorage.getItem('token')
   let newTask = $state<Omit<Task, 'id'>>({
     title: '',
     description: '',

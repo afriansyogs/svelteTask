@@ -10,8 +10,6 @@
   import type { User } from '$lib/types/type';
   import { alertError } from '@/lib/alert';
 
-  // let token = localStorage.getItem("token");
-  // token.token = localStorage.getItem("token");
   let userData = $state<User>();
   let errorMessage = $state<string>("");
   let formEdit = $state<boolean>(false)

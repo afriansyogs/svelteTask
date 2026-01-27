@@ -15,8 +15,6 @@
   
   let { dataTask, handleDelete, fetchTask } = $props()
 
-  // token.token = localStorage.getItem('token')
-
   async function handleDrop({sourceContainer, targetContainer, draggedItem} : DropEvent ) {
     console.log(`drag task ${draggedItem}`)
     console.log(`sc task ${sourceContainer}`)

@@ -17,8 +17,6 @@
   import { token } from '$lib/state/token.svelte';
   import type { Task } from '$lib/types/type';
 
-  // token.token = localStorage.getItem("token");
-  // console.log(token.token)
   let taskItem = $state<Task[]>([]);
   let isLoading = $state<boolean>(false);
   let errorMessage = $state<string>("");
@@ -63,7 +61,6 @@
   }
 
   async function fetchTask() {
-    // if (!token.token) return goto("/login");
     try {
       isLoading = true;
       const taskList = await taskData();

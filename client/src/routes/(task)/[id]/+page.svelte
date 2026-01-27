@@ -7,7 +7,6 @@
   import { token } from "$lib/state/token.svelte.js";
   import { formatDateTimeLocal } from "$lib/utils/FormatDateTime.js";
 
-  // token.token = localStorage.getItem("token");
   const { id } = page.params;
   let detailData = $state<Task>({
     id: id!,
