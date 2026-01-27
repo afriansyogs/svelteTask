@@ -8,7 +8,6 @@ export const taskData = async () : Promise<Response> => {
     headers: {
       'Content-type': 'application/json',
       'accept': 'application/json',
-      // 'Authorization': `Bearer ${token}`
     },
     credentials: 'include'
   })
@@ -18,7 +17,6 @@ export const submitTask = async (formData : FormData) : Promise<Response> => {
   return fetch(`${viteUrl}/newTask`, {
     method: 'POST',
     headers: {
-      // 'Authorization': `Bearer ${token}`
     },
     body: formData,
     credentials: 'include'
@@ -31,7 +29,6 @@ export const taskDetail = async (id: string) : Promise<Response> => {
     headers: {
       'Content-type': 'application/json',
       'accept': 'application/json',
-      // 'Authorization': `Bearer ${token}`
     },
     cache: 'no-store',
     credentials: 'include'
@@ -43,7 +40,6 @@ export const updatedTask = async (id : string, formData : FormData) : Promise<Re
   return fetch(`${viteUrl}/editTask/${id}`, {
     method: 'PATCH',
     headers: {
-      // 'Authorization': `Bearer ${token}`
     },
     body: formData,
     credentials: 'include'
@@ -57,7 +53,6 @@ export const updatedStatus = async (id : string, status : TaskStatus) : Promise<
     headers: {
       'Content-type': 'application/json',
       'accept': 'application/json',
-      // 'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
       id,
@@ -73,7 +68,6 @@ export const taskDelete = async (id : string) : Promise<Response> => {
     headers: {
       'Content-type': 'application/json',
       'accept': 'application/json',
-      // 'Authorization': `Bearer ${token}`
     },
     credentials: 'include'
   })

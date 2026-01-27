@@ -13,7 +13,6 @@
   import { updateUserData } from '$lib/api/UserApi';
 
   let { closeFormEdit, fetchUser, username, email, userImg } = $props()
-  // token.token = localStorage.getItem('token')
 
   async function handleUpdateUser(e : Event) {
     e.preventDefault();

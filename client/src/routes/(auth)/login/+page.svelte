@@ -25,7 +25,6 @@
   
       if (loginUser.status === 200) {
         await alertSuccess(response.message)
-        localStorage.setItem('token', response.token)
         goto('/')
       } else {
         await alertError(response.error)
