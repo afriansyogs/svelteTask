@@ -8,6 +8,7 @@ Aplikasi **Task Management**  untuk mengelola tugas harian dengan tampilan yang 
 * Drag & Drop task untuk mengubah status atau urutan
 * Auth JWT
 * Manajemen task yang simpel dan intuitif
+* SSR
 * **Desktop only**
 
 ## 🛠️ Tech Stack
@@ -33,7 +34,7 @@ task-management/
 └── README.md
 ```
 
-## ⚙️ Instalasi & Menjalankan Project
+## ⚙️ Instalasi & Running Project
 
 ### 1. Clone Repository
 
@@ -42,18 +43,9 @@ git clone https://github.com/afriansyogs/svelteTask.git
 cd svelteTask
 ```
 
-### 2. Menjalankan Backend
+### Run dengan Docker
 
 ```bash
-cd be
-npm install
-npm run dev
+docker-compose up -d --build
 ```
 
-### 3. Menjalankan Frontend
-
-```bash
-cd client
-npm install
-npm run dev
-```

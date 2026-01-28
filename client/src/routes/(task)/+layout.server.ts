@@ -7,21 +7,35 @@ export const load = (async ({ cookies, fetch, url }) => {
 	const token = cookies.get('token');
 
 	if(!token) throw redirect(302, '/login');
-	
-	let res;
+
   try {
-    res = await fetch('http://backend:3000/profile/getUsername', {
+    const userReq = await fetch('http://backend:3000/profile/getUsername', {
       method: 'GET',
       headers: { cookie: `token=${token}` }
     });
+
+    const taskReq = fetch('http://backend:3000/', {
+      method: 'GET',
+      headers: { cookie: `token=${token}` }
+    });
+
+    const [userRes, taskRes] = await Promise.all([userReq, taskReq]);
+
+    if (!userRes.ok || !taskRes.ok) {
+      if (userRes.status === 401 || taskRes.status === 401) {
+        throw redirect(302, '/login');
+      }
+    }
+
+    const userData = await userRes.json();
+    const taskData = await taskRes.json();
+
+    return {
+      user: userData,
+      tasks: taskData
+    };
   } catch (err) {
     console.error('Fetch backend failed:', err);
     throw redirect(302, '/login');
   }
-
-  if (!res.ok) throw redirect(302, '/login');
-
-	const user = await res.json()
-
-	return {user};
 }) satisfies LayoutServerLoad;
