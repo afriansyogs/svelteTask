@@ -1,5 +1,4 @@
 <script>
-	import favicon from '$lib/assets/favicon.svg';
   import SideBar from '$lib/components/SideBar.svelte';
 
 	let { children } = $props();

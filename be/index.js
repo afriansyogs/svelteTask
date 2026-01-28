@@ -31,6 +31,6 @@ app.use('/auth', authRoutes);
 app.use('/profile', userRoutes);
 app.use('/', taskRoutes);
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0' , () => {
   console.log(`listening port ${port}`)
 });
