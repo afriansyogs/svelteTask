@@ -16,12 +16,13 @@
   import IconPlus from '@lucide/svelte/icons/plus';
   import { token } from '$lib/state/token.svelte';
   import type { Task } from '$lib/types/type';
+  let {data} =  $props()
 
-  let taskItem = $state<Task[]>([]);
+  let taskItem = $state<Task[]>(data.tasks.data);
   let isLoading = $state<boolean>(false);
   let errorMessage = $state<string>("");
   let formAdd = $state<boolean>(false);
-  let username = $state<string>("");
+  let username = $state<string>(data.user.data.username);
 
   function toogleFormNewTask() {
     formAdd = !formAdd;
@@ -40,23 +41,6 @@
       }
     } catch (error) {
       console.log(error);
-    }
-  }
-
-  async function fetchUsername() {
-    try {
-      isLoading
-      const fetchUsername = await getUsername();
-      const response = await fetchUsername.json();
-      username = response.data.username;
-    } catch (error) {
-      if (error instanceof Error) {
-        errorMessage = error.message; 
-      } else {
-        errorMessage = "Gagal Fetch username";
-      }
-    } finally {
-      isLoading = false
     }
   }
 
@@ -80,11 +64,6 @@
       isLoading = false;
     }
   }
-
-  onMount(async () => {
-    await fetchUsername();
-    await fetchTask();
-  });
 </script>
 
 <div class="pb-20">
